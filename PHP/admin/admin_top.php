@@ -9,6 +9,7 @@
 <body>
 
 
+<div class="button-container">
     <button type="submit" class="user">
         <a href="admin_user1.php">ユーザー管理</a>
     </button>
@@ -18,6 +19,15 @@
     <button type="button" class="pass">
         <a href="admin_pass1.php">パスワード管理</a>
     </button>
+</div>
+
+<!-- ログアウトボタンを別のコンテナに移動 -->
+<div class="logout-container">
+    <button type="button" class="out">
+        <a href="top.php">ログアウト</a>
+    </button>
+</div>
+
 
 <script src="../JavaScript/hamburger.js"></script>
 

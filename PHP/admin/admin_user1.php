@@ -1,4 +1,20 @@
-        <!DOCTYPE html>
+<?php
+// データベース接続 (PDO を使用)
+const SERVER = 'mysql310.phy.lolipop.lan';
+const DBNAME = 'LAA1517323-circus';
+const USER = 'LAA1517323';
+const PASS = 'Pass0128';
+
+try {
+    $pdo = new PDO('mysql:host='. SERVER. ';dbname='. DBNAME. ';charset=utf8', USER, PASS);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "データベース接続エラー: " . $e->getMessage();
+    exit;
+}
+?>
+
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -172,31 +188,23 @@
                 <th>ID</th>
                 <th>ユーザーネーム</th>
                 <th>メール</th>
-                <th>電話番号</th>
                 <th>削除</th>
             </tr>
         </thead>
         <tbody id="user-table">
-            <tr>
-                <td>1</td>
-                <td>kojirow</td>
-                <td>kojirow@example.com</td>
-                <td>080-1234-5678</td>
-                <td><button type="button" class="sakujyo" onclick="showCustomPopup()">削除</button></td>
-            </tr>
+
             <!-- PHPコードを使用してユーザーデータを取得 -->
-            <?php
-            // require 'db.php';
-            // $stmt = $pdo->query("SELECT id, name, email FROM users");
-            // while ($row = $stmt->fetch()) {
-            //     echo "<tr>
-            //               <td>{$row['id']}</td>
-            //               <td>{$row['name']}</td>
-            //               <td>{$row['email']}</td>
-            //               <td></td>
-            //               <td><button type='button' class='sakujyo'>削除</button></td>
-            //           </tr>";
-            // }
+ <?php
+            // ユーザーデータを取得
+            $stmt = $pdo->query("SELECT id, name, email FROM user");
+            while ($row = $stmt->fetch()) {
+                echo "<tr>
+                          <td>{$row['id']}</td>
+                          <td>{$row['name']}</td>
+                          <td>{$row['email']}</td>
+                          <td><button type='button' class='sakujyo' onclick='showCustomPopup({$row['id']})'>削除</button></td>
+                      </tr>";
+            }
             ?>
         </tbody>
     </table>
@@ -251,3 +259,4 @@
 
 </body>
 </html>
+

@@ -1,3 +1,4 @@
+/* #FFF857 #D1A301 金*/
 body {
   font-family: 'Comic Sans MS', cursive, sans-serif;
   background: linear-gradient(135deg, #ffffff 0%, #d4af37 100%); /* グラデーション背景 */
@@ -8,6 +9,18 @@ body {
   flex-direction: column;
   margin: 0;
   overflow: hidden; /* スクロールバーを隠す */
+  position: relative; /* 相対位置を設定 */
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column; /* 縦にボタンを配置 */
+}
+
+.logout-container {
+  position: absolute; /* 絶対位置を設定 */
+  top: 20px; /* 上からの距離 */
+  right: 20px; /* 右からの距離 */
 }
 
 button {
