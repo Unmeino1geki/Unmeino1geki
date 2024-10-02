@@ -19,6 +19,10 @@
         <a href="admin_pass1.php">パスワード管理</a>
     </button>
 
+    <button type="button" class="out">
+        <a href="top.php">ログアウト</a>
+    </button>
+
 <script src="../JavaScript/hamburger.js"></script>
 
 <style>

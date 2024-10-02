@@ -2,14 +2,15 @@
 /* 全体のスタイル */
 body {
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    background: linear-gradient(135deg, #ffffff 0%, #dbc477 100%); /* グラデーションを金と白に設定 */
+    background: linear-gradient(135deg, #ffffff 0%, #d4af37 100%); /* グラデーション背景 */
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     margin: 0;
-}
-
+    overflow: hidden; /* スクロールバーを隠す */
+  }
  
 /* フォームのコンテナ */
 form {
