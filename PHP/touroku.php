@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // エラーメッセージを表示するための変数を初期化
 $usernameError = $passwordError = $genderError = "";
 $username = $password = $gender = "";
@@ -50,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新規登録</title>
-    <link rel="stylesheet" href="css/touroku.css">
+    <link rel="stylesheet" href="../CSS/touroku.css">
     <style>
         .error {
             color: red;
