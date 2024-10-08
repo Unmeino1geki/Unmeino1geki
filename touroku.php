@@ -1,7 +1,7 @@
 <?php
 // エラーメッセージを表示するための変数を初期化
-$usernameError = $passwordError = "";
-$username = $password = "";
+$usernameError = $passwordError = $genderError = "";
+$username = $password = $gender = "";
 
 // POSTリクエストを受け取ったときの処理
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,13 +23,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = htmlspecialchars($_POST["password"], ENT_QUOTES, 'UTF-8');
     }
 
+    // 性別のチェック
+    if (empty($_POST["gender"])) {
+        $genderError = "性別を選択してください";
+        $isValid = false;
+    } else {
+        $gender = htmlspecialchars($_POST["gender"], ENT_QUOTES, 'UTF-8');
+    }
+
     // フォームが有効ならtouroku_output.phpにデータを送信
     if ($isValid) {
-        // データをPOSTで送信する
         echo "<form id='redirectForm' action='touroku_output.php' method='post'>";
         echo "<input type='hidden' name='username' value='" . $username . "'>";
         echo "<input type='hidden' name='password' value='" . $password . "'>";
-        echo "<input type='hidden' name='gender' value='" . htmlspecialchars($_POST["gender"], ENT_QUOTES, 'UTF-8') . "'>";
+        echo "<input type='hidden' name='gender' value='" . $gender . "'>";
         echo "</form>";
         echo "<script>document.getElementById('redirectForm').submit();</script>";
         exit();
@@ -67,11 +74,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label>性別:</label>
         <div class="gender">
-            <label><input type="radio" id="male" name="gender" value="male"> 男性</label>
-            <label><input type="radio" id="female" name="gender" value="female"> 女性</label>
+            <label><input type="radio" id="male" name="gender" value="male" <?php if($gender == 'male') echo 'checked'; ?>> 男性</label>
+            <label><input type="radio" id="female" name="gender" value="female" <?php if($gender == 'female') echo 'checked'; ?>> 女性</label>
+            <label><input type="radio" id="other" name="gender" value="other" <?php if($gender == 'other') echo 'checked'; ?>> ジェンダー</label>
+            <label><input type="radio" id="none" name="gender" value="none" <?php if($gender == 'none') echo 'checked'; ?>> なし</label>
         </div>
+        <span class="error"><?php echo $genderError; ?></span><br><br>
 
-        <input type="submit" value="新規登録">
+        <input type="submit" value="次へ">
     </form>
 </div>
 </body>
