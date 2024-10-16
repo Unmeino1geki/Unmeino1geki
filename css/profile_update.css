@@ -1,0 +1,20 @@
+.success-message {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 18px;
+    color: #333;
+}
+
+.success-message a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.success-message a:hover {
+    background-color: #45a049;
+}
