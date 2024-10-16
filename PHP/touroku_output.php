@@ -41,10 +41,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         ?>
     </p>
-
-    <!-- 戻るボタン -->
-    <form action="touroku.php" method="get">
-        <button type="submit">戻る</button>
-    </form>
 </body>
 </html>

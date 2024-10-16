@@ -21,8 +21,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["password"])) {
         $passwordError = "パスワードを記入してください";
         $isValid = false;
+    } elseif (!preg_match("/^[a-zA-Z0-9]{8,16}$/", $_POST["password"])) {
+        $passwordError = "パスワードは半角英数字で8文字以上16文字以下にしてください";
+        $isValid = false;
     } else {
         $password = htmlspecialchars($_POST["password"], ENT_QUOTES, 'UTF-8');
+    }
+
+    // 確認用パスワードのチェック
+    if (empty($_POST["confirm_password"])) {
+        $confirmPasswordError = "確認用パスワードを入力してください";
+        $isValid = false;
+    } elseif ($_POST["password"] !== $_POST["confirm_password"]) {
+        $confirmPasswordError = "パスワードが一致しません";
+        $isValid = false;
+    } else {
+        $confirmPassword = htmlspecialchars($_POST["confirm_password"], ENT_QUOTES, 'UTF-8');
     }
 
     // 性別のチェック
@@ -33,14 +47,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $gender = htmlspecialchars($_POST["gender"], ENT_QUOTES, 'UTF-8');
     }
 
-    // フォームが有効ならtouroku_output.phpにデータを送信
+    // メールアドレスのセッション保存
+    $_SESSION['User']['email'] = $_SESSION['User']['email'] ?? '';
+    
+
+    // フォームが有効ならセッションに保存
     if ($isValid) {
-        echo "<form id='redirectForm' action='touroku_output.php' method='post'>";
-        echo "<input type='hidden' name='username' value='" . $username . "'>";
-        echo "<input type='hidden' name='password' value='" . $password . "'>";
-        echo "<input type='hidden' name='gender' value='" . $gender . "'>";
-        echo "</form>";
-        echo "<script>document.getElementById('redirectForm').submit();</script>";
+        $_SESSION['User']['username'] = $username;
+        $_SESSION['User']['password'] = $password;
+        $_SESSION['User']['gender'] = $gender;
+
+        // 肌質を決める質問のページにリダイレクト
+        header('Location: skin_question.php');
         exit();
     }
 }
