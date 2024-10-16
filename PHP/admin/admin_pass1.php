@@ -1,9 +1,41 @@
 <!DOCTYPE html>
+<?php
+// データベース接続 (PDO を使用)
+const SERVER = 'mysql310.phy.lolipop.lan';
+const DBNAME = 'LAA1517323-circus';
+const USER = 'LAA1517323';
+const PASS = 'Pass0128';
+
+try {
+    $pdo = new PDO('mysql:host='. SERVER. ';dbname='. DBNAME. ';charset=utf8', USER, PASS);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // POSTリクエストで送信されたデータの処理
+    if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['password'])) {
+        $id = (int)$_POST['id'];
+        $name = $_POST['name'];
+        $password = $_POST['password'];
+
+        // パスワードのハッシュ化（セキュリティ対策）
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // ユーザー情報を更新するSQLクエリ
+        $stmt = $pdo->prepare("UPDATE user SET name = ?, password = ? WHERE id = ?");
+        $stmt->execute([$name, $hashedPassword, $id]);
+
+        echo json_encode(["status" => "success", "message" => "User updated successfully"]);
+        exit; // 更新後にスクリプトを終了
+    }
+} catch (PDOException $e) {
+    echo "データベース接続エラー: " . $e->getMessage();
+    exit;
+}
+?>
+
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>パスワード管理画面</title>
     <style>
         /* 背景と基本のスタイル */
@@ -12,10 +44,19 @@
             margin: 0;
             padding: 20px;
             height: 100vh;
+            overflow: hidden; /* bodyのスクロールをなくす */
+            
         }
         
         /* テーブルのスタイル */
+        #table-container {
+    width: 100%;
+    max-height: 70%; /* 固定の高さを設定 */
+    overflow-y: auto; /* 縦スクロールを有効にする */
+}
         table {
+            
+    border: 1px solid #ffffff; /* 枠線 */
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
@@ -37,7 +78,7 @@
 
         /* 2行目以降（他のtr）を薄い黄色に */
         tbody tr:not(:first-child) {
-            background-color: #FFFACD; /* 薄い黄色 */
+            background-color: #FFD700; /* 薄い黄色 */
         }
         /* 戻るボタンのデザイン */
         .modoru{
@@ -56,7 +97,6 @@
         .modoru:hover {
             background-color: #b8860b;
         }
-
 
         .henkou{
             background-color: #44ce37;
@@ -77,7 +117,7 @@
         }
 
         /* 検索バーのスタイル */
-        #search-bar {
+        #search-bar,#search-bar-name {
             margin-bottom: 20px;
             padding: 10px;
             width: 200px; /* 短くする */
@@ -85,8 +125,6 @@
             border: 1px solid #d4af37;
             border-radius: 5px;
         }
-
-
 
         /* 検索バーと戻るボタンの配置 */
         .action-bar {
@@ -158,9 +196,9 @@
         }
 
         #username-all, #password-all {
-    margin-bottom: 20px;
-    font-size: 16px;
-}
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -170,10 +208,11 @@
     <!-- 検索バーと戻るボタンを右側に配置 -->
     <div class="action-bar">
         <input type="text" id="search-bar" onkeyup="searchById()" placeholder="IDで検索...">
-        <button class="modoru" onclick="window.history.back()">戻る</button>
+        <input type="text" id="search-bar-name" onkeyup="searchByName()" placeholder="ユーザー名で検索...">
+        <button class="modoru" onclick="location.href='admin_top.php'">戻る</button>
     </div>
-
-    <table>
+    <div id="table-container">
+    <table id="user-table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -181,102 +220,139 @@
                 <th>パスワード</th>
                 <th>変更</th>
             </tr>
-            
         </thead>
-        <tbody id="pass-table">
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th><button type="submit" class="henkou" onclick="showCustomPopup()">
-        変更
-    </button></th>
-            </tr>
+        <tbody>
             <?php
-            //require 'db.php'; // データベース接続を読み込む
-
-            //$stmt = $pdo->query("SELECT id, name, email FROM users"); // users テーブルからデータを取得
-            //while ($row = $stmt->fetch()) {
-            //echo "<tr>
-                      //<td>{$row['id']}</td>
-                      //<td>{$row['name']}</td>
-                      //<td>{$row['email']}</td>
-                    //</tr>";
-            //}
+            $stmt = $pdo->query("SELECT id, name, password FROM user"); // users テーブルからデータを取得
+            while ($row = $stmt->fetch()) {
+                echo "<tr>
+                        <td>{$row['id']}</td>
+                        <td>{$row['name']}</td>
+                        <td>{$row['password']}</td>
+                        <td><button type='button' class='henkou' onclick='showCustomPopup({$row['id']}, \"{$row['name']}\", \"{$row['password']}\")'>変更</button></td>
+                    </tr>";
+            }
             ?>
         </tbody>
     </table>
-<!-- ポップアップのHTML -->
-<div id="popupBackground" class="sample-popup-background" style="display:none;"></div>
-    <div id="customPopup">
-        <p>変更する内容を入力して変更を押してください</p>
-        <div id="username-all">
-                ユーザー名<br><input type="text" id="adminname" name="adminname" placeholder="ADMIN NAME" required>
-            </div>
-            <div id="password-all">
-                パスワード<br><input type="password" id="password" name="password" placeholder="PASSWORD" required>
-            </div>
-        <button onclick="hideCustomPopup(true)" class="yes">変更</button>
-        <button onclick="hideCustomPopup(false)" class="no">キャンセル</button>
     </div>
-    <script>
-        // IDで検索する関数
-        function searchById() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("search-bar");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("user-table");
-            tr = table.getElementsByTagName("tr");
+    <!-- ポップアップのHTML -->
+<div id="popupBackground" class="sample-popup-background" style="display:none;"></div>
+<div id="customPopup" style="display:none;"> <!-- 初期表示は非表示 -->
+    <p>変更する内容を入力して変更を押してください</p>
+    <form id="deleteForm" action="admin_pass2.php" method="POST" onsubmit="return validatePassword()">
+        <input type="hidden" name="user_id" id="popupUserId"> <!-- 削除するユーザーIDを保持 -->
 
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0]; // IDは最初の列
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
-        function searchById() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("search-bar");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("syouhin-table");
-            tr = table.getElementsByTagName("tr");
+        <!-- ユーザー名とパスワードのフィールド -->
+        <div id="username-all">
+            ユーザー名<br>
+            <input type="text" id="adminname" name="adminname" placeholder="ADMIN NAME" required>
+        </div>
+        <div id="password-all">
+            パスワード<br>
+            <input type="password" id="password" name="password" placeholder="PASSWORD" required>
+        </div>
 
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0]; // IDは最初の列
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
+        <!-- 変更ボタンをsubmitに変更 -->
+        <div class="popup-buttons" style="display: flex; justify-content: space-between;">
+            <button type="submit" class="yes" style="margin-right: 30px;">変更</button> <!-- 変更ボタン -->
+            <button type="button" onclick="closeCustomPopup()" class="no">キャンセル</button> <!-- キャンセルボタン -->
+        </div>
+    </form>
+</div>
+
+<!-- JavaScript -->
+<script>
+    function validatePassword() {
+        var password = document.getElementById('password').value;
+        if (password.length < 8) {
+            alert('パスワードは8文字以上で入力してください');
+            return false; // フォームの送信を停止
         }
-        
-// カスタムポップアップを表示する関数
-function showCustomPopup() {
+        return true; // フォームの送信を許可
+    }
+
+    function closeCustomPopup() {
+        document.getElementById('customPopup').style.display = 'none';
+        document.getElementById('popupBackground').style.display = 'none';
+    }
+</script>
+
+
+
+
+<script>
+   function showCustomPopup(userId, username, email) {
+    // ポップアップを表示する
     document.getElementById("popupBackground").style.display = "block";
     document.getElementById("customPopup").style.display = "block";
+
+    // ユーザーネームを placeholder に設定
+    document.getElementById("adminname").value = username;  // ユーザー名のフィールドにユーザーネームを入れる
+    document.getElementById("password").value = '';  // パスワードフィールドを空にする
 }
 
-// カスタムポップアップを非表示にする関数
-function hideCustomPopup(result) {
+function closeCustomPopup() {
+    // ポップアップを非表示にする
     document.getElementById("popupBackground").style.display = "none";
     document.getElementById("customPopup").style.display = "none";
-    if (result) {
-        alert("変更しました");
-    } else {
-        alert("変更がキャンセルされました");
-    }
 }
 
+</script>
+
+
+    <script>
+        // Search functionality for ID
+        function searchById() {
+            var input = document.getElementById("search-bar").value.toLowerCase();
+            var table = document.getElementById("user-table");
+            var rows = table.getElementsByTagName("tr");
+
+            for (var i = 1; i < rows.length; i++) {
+                var id = rows[i].getElementsByTagName("td")[0].textContent;
+                if (id.toLowerCase().indexOf(input) > -1) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+
+        // Search functionality for username
+        function searchByName() {
+            var input = document.getElementById("search-bar-name").value.toLowerCase();
+            var table = document.getElementById("user-table");
+            var rows = table.getElementsByTagName("tr");
+
+            for (var i = 1; i < rows.length; i++) {
+                var username = rows[i].getElementsByTagName("td")[1].textContent;
+                if (username.toLowerCase().indexOf(input) > -1) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+
+        // Popup functionality
+        function showCustomPopup(userId, username, email) {
+    document.getElementById("popupBackground").style.display = "block";
+    document.getElementById("customPopup").style.display = "block";
+    document.getElementById("popupUserId").value = userId;  // ここでユーザーIDを設定
+    document.getElementById("adminname").value = username;
+    document.getElementById("password").value = '';  
+}
+
+
+        function closeCustomPopup() {
+            document.getElementById("popupBackground").style.display = "none";
+            document.getElementById("customPopup").style.display = "none";
+        }
+
+        // Function to handle data submission
+        function submitData() {
+            // Submit logic for your form
+        }
     </script>
 
 </body>
