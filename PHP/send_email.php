@@ -1,5 +1,6 @@
 <?php
-require 'connect/dbconnect.php';
+// dbconnect.phpファイルの内容を使用して接続設定を行う
+require_once 'connect/dbconnect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -11,10 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $expires_at = date("Y-m-d H:i:s", strtotime('+1 hour'));
     
     // トークンとメールアドレスをデータベースに保存
-    $stmt = $pdo->prepare("INSERT INTO email_verifications (test_email, token, expires_at) VALUES (:email, :token, :expires_at)");
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':token', $token);
-    $stmt->bindParam(':expires_at', $expires_at);
+    $stmt = $conn->prepare("INSERT INTO email_verifications (test_email, token, expires_at) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $email, $token, $expires_at);
     $stmt->execute();
 
     // 認証リンクの生成
@@ -45,3 +44,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
