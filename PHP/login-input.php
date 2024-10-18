@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'common/db-connect.php';
+include 'connect/dbconnect.php';
 
 $errors = []; // エラーメッセージを格納する配列
 
