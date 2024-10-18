@@ -52,6 +52,86 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン</title>
+    <style>
+        body {
+    font-family: 'Lora', serif;
+    background-color: #f0f8ff; /* 柔らかい淡い青 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.content {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px; /* より柔らかな角丸 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 軽いシャドウで浮いた印象 */
+    width: 350px;
+    text-align: center;
+    border: 1px solid #d0e6f9; /* 優しい青色のボーダー */
+}
+
+h1 {
+    font-size: 26px;
+    color: #1e90ff; /* 明るい青 */
+    margin-bottom: 20px;
+    font-weight: 600; /* 文字を少し太く */
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid #a0cfee; /* 青系のボーダー */
+    border-radius: 8px; /* 角丸を増やして柔らかい印象に */
+    box-sizing: border-box;
+    background-color: #f8fbff; /* 背景を柔らかい青に */
+    transition: border-color 0.3s; /* フォーカス時のエフェクト */
+}
+
+input[type="email"]:focus, input[type="password"]:focus {
+    border-color: #1e90ff; /* フォーカス時に明るい青へ */
+    outline: none; /* デフォルトのアウトラインを削除 */
+}
+
+.btn {
+    background-color: #1e90ff; /* 鮮やかな青 */
+    color: #ffffff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #187bcd; /* ホバー時に濃い青 */
+}
+
+p {
+    font-size: 14px;
+    color: #666666;
+}
+
+a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p.error {
+    color: #ff4f4f; /* エラーメッセージは赤で強調 */
+}
+
+    </style>
 </head>
 <body>
 <div class="flexbox">
