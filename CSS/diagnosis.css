@@ -1,0 +1,93 @@
+/* 全体のスタイル設定 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+/* フォームのスタイル */
+form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* フィールドセット */
+fieldset {
+    border: none;
+    margin-bottom: 20px;
+}
+
+/* レジェンド（質問部分） */
+legend {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* ラジオボタンのスタイル */
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+label {
+    font-size: 16px;
+    color: #666;
+    cursor: pointer;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fafafa;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+label:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* 選択されているラジオボタンのスタイル */
+input[type="radio"]:checked + label {
+    background-color: #007bff;
+    color: white;
+}
+
+/* 送信ボタンのスタイル */
+input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* エラーメッセージのスタイル */
+.error {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}

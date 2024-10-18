@@ -1,18 +1,5 @@
 <?php
-// データベース接続設定
-$SERVER = "mysql309.phy.lolipop.lan"; // ロリポップのMySQLサーバー
-$USER = "LAA1516908";  // ロリポップのユーザー名
-$PASS = "pass0728";    // ロリポップのパスワード
-$DBNAME = "LAA1516908-circus";  // ロリポップのデータベース名
-
-// データベース接続
-$conn = 'mysql:host=' . $SERVER . ';dbname=' . $DBNAME . ';charset=utf8';
-try {
-    $pdo = new PDO($conn, $USER, $PASS);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage() . " - Server: " . $SERVER);
-}
+require 'connect/dbconnect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
