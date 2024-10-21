@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>真夜中のサーカス利用規約</title>
-    <link rel="stylesheet" href="../css/Terms of Service.css">
+    <link rel="stylesheet" href="../CSS/Terms of Service.css">
 </head>
 <body>
     <header>
