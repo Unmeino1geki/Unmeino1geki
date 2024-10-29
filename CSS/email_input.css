@@ -1,20 +1,44 @@
-#container {
-    width: 40%;
-    height: 20rem;
-    margin-right: 25%;
-    margin-left: 25%;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(45deg, #757575 0%, #9E9E9E 45%, #E8E8E8 70%, #9E9E9E 85%, #757575 90% 100%);
+    font-family: 'Oswald', sans-serif;
+    overflow-x: hidden;
 }
-input[type="email"]{
-    width: 80%;
-    margin-bottom: 5%;
+
+.screens {
+    margin: 0;
+    padding: 0;
 }
-input[type="submit"] {
-    width: 20%;
-    margin-bottom: 5%;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+
+.screen {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    list-style-type: none;
+    display: block;
+}
+
+.screen0 {
+    background-color: DarkRed;
+    background-image: radial-gradient(circle at center center, black, #ccc), repeating-radial-gradient(circle at center center, black, black, 1rem, transparent 2rem, transparent 1rem);
+    background-blend-mode: multiply;
+}
+
+.screen1 {
+    background-image: radial-gradient(ellipse at center, rgba(0,50,50,1) 0%, rgba(0,0,0,1) 100%);
+}
+
+.next-arrow,
+.back-arrow {
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    text-align: center;
+}
+
+svg {
+    fill: white;
+    width: 100px;
 }

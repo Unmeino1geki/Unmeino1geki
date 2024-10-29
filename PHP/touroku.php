@@ -2,7 +2,7 @@
 session_start();
 
 // エラーメッセージを表示するための変数を初期化
-$usernameError = $passwordError = $genderError = "";
+$usernameError = $passwordError = $confirmPasswordError = $genderError = "";
 $username = $password = $gender = "";
 
 // POSTリクエストを受け取ったときの処理
@@ -35,8 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($_POST["password"] !== $_POST["confirm_password"]) {
         $confirmPasswordError = "パスワードが一致しません";
         $isValid = false;
-    } else {
-        $confirmPassword = htmlspecialchars($_POST["confirm_password"], ENT_QUOTES, 'UTF-8');
     }
 
     // 性別のチェック
@@ -49,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // メールアドレスのセッション保存
     $_SESSION['User']['email'] = $_SESSION['User']['email'] ?? '';
-    
 
     // フォームが有効ならセッションに保存
     if ($isValid) {
@@ -57,8 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['User']['password'] = $password;
         $_SESSION['User']['gender'] = $gender;
 
-        // 肌質を決める質問のページにリダイレクト
-        header('Location: skin_question.php');
+        // touroku-output.phpにリダイレクト
+        header('Location: touroku_output.php');
         exit();
     }
 }
@@ -91,6 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="password">パスワード:</label>
         <input type="password" id="password" name="password"><br>
         <span class="error"><?php echo $passwordError; ?></span><br><br>
+
+        <label for="confirm_password">確認用パスワード:</label>
+        <input type="password" id="confirm_password" name="confirm_password"><br>
+        <span class="error"><?php echo $confirmPasswordError; ?></span><br><br>
 
         <label>性別:</label>
         <div class="gender">
