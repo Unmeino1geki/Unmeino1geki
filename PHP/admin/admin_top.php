@@ -2,32 +2,29 @@
 <html lang="ja">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Document</title>
+    <title>管理画面</title>
     <link rel="stylesheet" href="../../CSS/admin/admin-top.css">
-    <title> 管理者画面 </title>
 </head>
 <body>
 
-
 <div class="button-container">
-    <button type="submit" class="user">
-        <a href="admin_user1.php">ユーザー管理</a>
+    <button type="submit" class="user" onclick="location.href='admin_user1.php'">
+        ユーザー管理
     </button>
-    <button type="submit" class="rebyu">
-        <a href="admin_rebyu1.php">レビュー管理</a>
+    <button type="submit" class="rebyu" onclick="location.href='admin_rebyu1.php'">
+        レビュー管理
     </button>
-    <button type="button" class="pass">
-        <a href="admin_pass1.php">パスワード管理</a>
+    <button type="button" class="pass" onclick="location.href='admin_pass1.php'">
+        パスワード管理
     </button>
 </div>
 
 <!-- ログアウトボタンを別のコンテナに移動 -->
 <div class="logout-container">
-    <button type="button" class="out">
-        <a href="top.php">ログアウト</a>
+    <button type="button" class="out" onclick="location.href='top.php'">
+        ログアウト
     </button>
 </div>
-
 
 <script src="../JavaScript/hamburger.js"></script>
 
@@ -36,3 +33,5 @@ html,body {
   overflow-y: hidden;
 } 
 </style>
+</body>
+</html>
