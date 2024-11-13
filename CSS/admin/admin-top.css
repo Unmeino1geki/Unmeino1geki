@@ -1,0 +1,52 @@
+/* #FFF857 #D1A301 金*/
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(135deg, #ffffff 0%, #d4af37 100%); /* グラデーション背景 */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0;
+  overflow: hidden; /* スクロールバーを隠す */
+  position: relative; /* 相対位置を設定 */
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column; /* 縦にボタンを配置 */
+}
+
+.logout-container {
+  position: absolute; /* 絶対位置を設定 */
+  top: 20px; /* 上からの距離 */
+  right: 20px; /* 右からの距離 */
+}
+
+button {
+  background-color: #d4af37; /* ボタンの背景色 */
+  color: white; /* ボタンのテキスト色 */
+  font-size: 18px; /* ボタンのフォントサイズ */
+  padding: 12px 0; /* ボタンの上下の内側の余白 */
+  width: 200px; /* ボタンの幅を固定 */
+  height: 50px; /* ボタンの高さを固定 */
+  border: 2px solid white; /* ボタンの周りに白い境界線を追加 */
+  border-radius: 10px; /* ボタンの角を丸める */
+  cursor: pointer; /* カーソルをポインターに変更 */
+  transition: background-color 0.3s, border-color 0.3s; /* 背景色と境界線の変化にアニメーションを追加 */
+  margin: 10px; /* ボタンの外側の余白 */
+  text-decoration: none; /* リンクの下線を消す */
+  display: flex; /* flexboxでテキストを中央揃え */
+  justify-content: center; /* 横方向中央揃え */
+  align-items: center; /* 縦方向中央揃え */
+}
+
+button:hover {
+  background-color: #c89f29; /* ホバー時の色 */
+  border-color: #fff; /* ホバー時に境界線の色を白に */
+}
+
+a {
+  color: white; /* リンクのテキスト色を白に */
+  text-decoration: none; /* リンクの下線を消す */
+}
