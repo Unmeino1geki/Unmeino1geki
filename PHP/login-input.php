@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'common/db-connect.php';
+include 'connect/dbconnect.php';
 
 $errors = []; // エラーメッセージを格納する配列
 
@@ -52,6 +52,86 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン</title>
+    <style>
+        body {
+    font-family: 'Lora', serif;
+    background-color: #f0f8ff; /* 柔らかい淡い青 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.content {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    width: 350px;
+    text-align: center;
+    border: 1px solid #d0e6f9; 
+}
+
+h1 {
+    font-size: 26px;
+    color: #1e90ff; 
+    margin-bottom: 20px;
+    font-weight: 600; 
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid #a0cfee;
+    border-radius: 8px; 
+    box-sizing: border-box;
+    background-color: #f8fbff; 
+    transition: border-color 0.3s; 
+}
+
+input[type="email"]:focus, input[type="password"]:focus {
+    border-color: #1e90ff; 
+    outline: none; 
+}
+
+.btn {
+    background-color: #1e90ff; 
+    color: #ffffff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #187bcd; 
+}
+
+p {
+    font-size: 14px;
+    color: #666666;
+}
+
+a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p.error {
+    color: #ff4f4f; /* エラーメッセージは赤で強調 */
+}
+
+    </style>
 </head>
 <body>
 <div class="flexbox">
@@ -65,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p>パスワード</p><input type="password" name="pass">
             <button type="submit" class="btn">ログイン</button>
         </form>
-        <p>アカウントをお持ちでないですか？ <a href=".php">新規登録</a></p>
+        <p>アカウントをお持ちでないですか？ <a href="touroku.php">新規登録</a></p>
     </div>
 </div>
 </body>
