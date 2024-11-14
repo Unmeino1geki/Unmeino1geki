@@ -28,10 +28,10 @@ const PASS = 'Pass0128';
     <!-- サイドメニュー -->
     <aside>
         <ul>
-            <li><a href="#">トップ</a></li>
-            <li><a href="#">メールアドレス変更</a></li>
-            <li><a href="#">パスワード変更</a></li>
-            <li><a href="#">アカウント削除</a></li>
+            <li><a href="/top.php">トップ</a></li>
+            <li><a href="/change-email.php">メールアドレス変更</a></li>
+            <li><a href="/change-password">パスワード変更</a></li>
+            <li><a href="">アカウント削除</a></li>
             <li><a href="#">アレルギー追加/変更</a></li>
         </ul>
     </aside>
