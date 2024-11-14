@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -87,17 +90,10 @@
             color: #4a90e2;
             margin-top: 10px;
         }
-
-        .recommendation {
-            background-color: #eef;
-            padding: 15px;
-            margin-top: 10px;
-            border-radius: 5px;
-            color: #333;
-        }
     </style>
 </head>
 <body>
+<?php echo $_SESSION['User']['username']; ?>
     <h1>肌質診断</h1>
     <div id="question-container">
         <p id="question-text"></p>
@@ -178,59 +174,68 @@
                 answerOptions.appendChild(optionButton);
             });
 
-            nextButton.textContent = currentQuestion === questions.length - 1 ? "完了" : "次へ";
+            nextButton.textContent = (currentQuestion === questions.length - 1) ? "結果を見る" : "次へ";
         }
 
         function nextQuestion() {
+            // 選択肢が選ばれていない場合は、次の質問に進まない
             if (!selectedAnswer) {
                 alert("回答を選択してください。");
                 return;
             }
 
+            // 選択した肌タイプにポイントを加算
             skinTypeScores[selectedAnswer]++;
-            currentQuestion++;
 
-            if (currentQuestion < questions.length) {
+            // 最後の質問に達していない場合は次の質問を表示
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
                 showQuestion();
             } else {
-                showResults();
+                showResult();
             }
         }
 
-        function showResults() {
-            const questionContainer = document.getElementById('question-container');
-            questionContainer.innerHTML = "<h2>診断結果</h2>";
+        function showResult() {
+            // 肌タイプのスコアをもとに最大スコアのタイプを判定
+            const skinType = Object.keys(skinTypeScores).reduce((a, b) => skinTypeScores[a] > skinTypeScores[b] ? a : b);
+            
+            // セッションに肌タイプを保存するために、PHPでの再読み込みなしでデータを送信
+            fetch("save_skin_type.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ skin_type: skinType })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 結果の表示と「登録内容を確認」ボタンの表示
+                    const questionContainer = document.getElementById("question-container");
+                    questionContainer.innerHTML = `<p class="result-text">肌質診断が完了しました！結果は ${skinType} です。</p>`;
 
-            const highestScoreType = Object.keys(skinTypeScores).reduce((a, b) => 
-                skinTypeScores[a] > skinTypeScores[b] ? a : b
-            );
+                    const confirmButton = document.createElement("button");
+                    confirmButton.textContent = "登録内容を確認";
+                    confirmButton.id = "confirm-button";
+                    confirmButton.style.marginTop = "20px";
+                    confirmButton.style.padding = "10px 20px";
+                    confirmButton.style.fontSize = "1em";
+                    confirmButton.style.backgroundColor = "#4a90e2";
+                    confirmButton.style.color = "white";
+                    confirmButton.style.border = "none";
+                    confirmButton.style.borderRadius = "5px";
+                    confirmButton.style.cursor = "pointer";
+                    confirmButton.style.transition = "background-color 0.3s";
+                    confirmButton.onclick = () => {
+                        window.location.href = "touroku_confirm.php"; // 確認ページに移動
+                    };
 
-            let skinTypeText = "";
-            let recommendationText = "";
-
-            switch (highestScoreType) {
-                case "dry":
-                    skinTypeText = "乾燥肌";
-                    break;
-                case "normal":
-                    skinTypeText = "普通肌";
-                case "combination":
-                    skinTypeText = "混合肌";
-                    break;
-                case "oily":
-                    skinTypeText = "脂性肌";
-                    break;
-            }
-
-            const resultText = document.createElement("p");
-            resultText.textContent = skinTypeText;
-            resultText.className = "result-text";
-            questionContainer.appendChild(resultText);
-
-            const recommendation = document.createElement("div");
-            recommendation.className = "recommendation";
-            recommendation.textContent = recommendationText;
-            questionContainer.appendChild(recommendation);
+                    questionContainer.appendChild(confirmButton);
+                    document.getElementById("next-button").style.display = "none";
+                } else {
+                    alert("診断結果の保存に失敗しました。もう一度お試しください。");
+                }
+            })
+            .catch(error => console.error("エラーが発生しました:", error));
         }
 
         showQuestion();

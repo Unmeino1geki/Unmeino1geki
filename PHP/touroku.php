@@ -1,65 +1,56 @@
 <?php
-session_start();
+// dbconnect.phpファイルの内容を使用して接続設定を行う
+require_once 'connect/dbconnect.php';
 
-// エラーメッセージを表示するための変数を初期化
-$usernameError = $passwordError = $confirmPasswordError = $genderError = "";
-$username = $password = $gender = "";
-
-// POSTリクエストを受け取ったときの処理
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $isValid = true;
+    $email = $_POST['email'];
 
-    // ユーザー名のチェック
-    if (empty($_POST["username"])) {
-        $usernameError = "ユーザー名を記入してください";
-        $isValid = false;
+    // トークンを生成
+    $token = bin2hex(random_bytes(16));
+
+    // 有効期限を設定（1時間後）
+    $expires_at = date("Y-m-d H:i:s", strtotime('+1 hour'));
+
+    // トークンとメールアドレスをデータベースに保存
+    $stmt = $conn->prepare("INSERT INTO email_verifications (test_email, token, expires_at) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $email, $token, $expires_at);
+
+    if ($stmt->execute()) {
+        // 認証リンクの生成
+        $verification_link = "https://quiet-obi-5971.penne.jp/Unmeino1geki/PHP/touroku.php?token=" . urlencode($token);
+
+        // メール送り主のメアド（ロリポップのドメインメールを使用）
+        $emailfrom = "info@quiet-obi-5971.penne.jp";
+
+        // 日本語の送信者名をエンコード
+        $from_name = "運命の一撃運営チーム";
+        $encoded_from = mb_encode_mimeheader($from_name) . " <" . $emailfrom . ">";
+
+        // メールの件名
+        $subject = "メールアドレス認証";
+
+        // メールの内容
+        $mailBody = "新規登録リンク\n次のリンクをクリックして、ユーザー情報を登録してください\n\n$verification_link";
+
+        // メールヘッダー
+        $headers = 'From: ' . $encoded_from . "\r\n" .
+                   'X-Mailer: PHP/' . phpversion();
+
+        // メールを送信
+        if (mail($email, $subject, $mailBody, $headers)) {
+            echo "メールを送信しました。確認してください。";
+            // トークンをURLに含めて次のページへリダイレクト
+            header("Location: nextpage.php?token=" . urlencode($token));
+            exit();
+        } else {
+            echo "メールの送信に失敗しました。";
+        }
     } else {
-        $username = htmlspecialchars($_POST["username"], ENT_QUOTES, 'UTF-8');
-    }
-
-    // パスワードのチェック
-    if (empty($_POST["password"])) {
-        $passwordError = "パスワードを記入してください";
-        $isValid = false;
-    } elseif (!preg_match("/^[a-zA-Z0-9]{8,16}$/", $_POST["password"])) {
-        $passwordError = "パスワードは半角英数字で8文字以上16文字以下にしてください";
-        $isValid = false;
-    } else {
-        $password = htmlspecialchars($_POST["password"], ENT_QUOTES, 'UTF-8');
-    }
-
-    // 確認用パスワードのチェック
-    if (empty($_POST["confirm_password"])) {
-        $confirmPasswordError = "確認用パスワードを入力してください";
-        $isValid = false;
-    } elseif ($_POST["password"] !== $_POST["confirm_password"]) {
-        $confirmPasswordError = "パスワードが一致しません";
-        $isValid = false;
-    }
-
-    // 性別のチェック
-    if (empty($_POST["gender"])) {
-        $genderError = "性別を選択してください";
-        $isValid = false;
-    } else {
-        $gender = htmlspecialchars($_POST["gender"], ENT_QUOTES, 'UTF-8');
-    }
-
-    // メールアドレスのセッション保存
-    $_SESSION['User']['email'] = $_SESSION['User']['email'] ?? '';
-
-    // フォームが有効ならセッションに保存
-    if ($isValid) {
-        $_SESSION['User']['username'] = $username;
-        $_SESSION['User']['password'] = $password;
-        $_SESSION['User']['gender'] = $gender;
-
-        // touroku-output.phpにリダイレクト
-        header('Location: touroku_output.php');
-        exit();
+        echo "トークンの保存に失敗しました。";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -82,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- 新規登録フォーム -->
     <form action="touroku.php" method="post">
         <label for="username">ユーザー名:</label>
-        <input type="text" id="username" name="username" value="<?php echo $username; ?>"><br>
+        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>"><br>
         <span class="error"><?php echo $usernameError; ?></span><br><br>
 
         <label for="password">パスワード:</label>
@@ -97,8 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="gender">
             <label><input type="radio" id="male" name="gender" value="male" <?php if($gender == 'male') echo 'checked'; ?>> 男性</label>
             <label><input type="radio" id="female" name="gender" value="female" <?php if($gender == 'female') echo 'checked'; ?>> 女性</label>
-            <label><input type="radio" id="other" name="gender" value="other" <?php if($gender == 'other') echo 'checked'; ?>> ジェンダー</label>
-            <label><input type="radio" id="none" name="gender" value="none" <?php if($gender == 'none') echo 'checked'; ?>> なし</label>
+            <label><input type="radio" id="other" name="gender" value="other" <?php if($gender == 'other') echo 'checked'; ?>> その他</label>
+            <label><input type="radio" id="none" name="gender" value="none" <?php if($gender == 'none') echo 'checked'; ?>> 回答しない</label>
         </div>
         <span class="error"><?php echo $genderError; ?></span><br><br>
 
