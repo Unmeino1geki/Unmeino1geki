@@ -1,15 +1,3 @@
-<?php
-session_start();
-$_SESSION['user_id'] = 23;
-?>
-<?php
-const SERVER = 'mysql310.phy.lolipop.lan';
-const DBNAME = 'LAA1517323-circus';
-const USER = 'LAA1517323';
-const PASS = 'Pass0128';
-?>
-
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -97,23 +85,21 @@ button:hover {
     <img src="../IMG/なるみ.png" alt="SAKUJYO ロゴ" style="max-width: 200px; margin-bottom: 30px;"> <!-- ロゴも大きく -->
 
     <p class="a">
-        SAKUJYOを起動させるためには、以下の質問に答える必要があります。
+        SAKUJYO起動完了しました。
     </p>
     <p class="aa">
-        In order to start SAKUJYO, you need to answer the following questions.
+    SAKUJYO has started successfully.
     </p>
 
     <!-- 削除確認フォーム -->
-    <form action="sakujyo1.php" method="post">
+    <form action="login-input.php" method="post">
         <div id="username-all">
-            アカウントケシマスカ？
+            アカウントケシマシタ
         </div>
-        <p class="aaa">Do you have an account poppy?</p>
+        <p class="aaa">Account poppy</p>
 
         <div id="login-all">
     <button type="submit" id="yes-button">YES<span class="small-text">はい</span></button>
-
-    <button type="button" id="no-button" onclick="history.back();">NO<span class="small-text">いいえ</span></button>
 </div>
 
     </form>
