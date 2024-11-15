@@ -1,12 +1,24 @@
 <?php
 session_start();
-include 'connect/dbconnect.php';
+
+const SERVER = 'mysql310.phy.lolipop.lan';
+const DBNAME = 'LAA1517323-circus';
+const USER = 'LAA1517323';
+const PASS = 'Pass0128';
 
 $errors = []; // エラーメッセージを格納する配列
 
+// データベース接続を確立
+$conn = new mysqli(SERVER, USER, PASS, DBNAME);
+
+// 接続エラーがある場合は、エラーメッセージを表示して終了
+if ($conn->connect_error) {
+    die("データベース接続に失敗しました: " . $conn->connect_error);
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
-    $password = $_POST['pass'];
+    $password = $_POST['password'];
 
     // メールアドレスのバリデーション
     if (empty($email)) {
@@ -17,32 +29,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // パスワードのバリデーション
     if (empty($password)) {
-        $errors['pass'] = 'パスワードは必須です。';
+        $errors['password'] = 'パスワードは必須です。';
     }
 
     if (count($errors) === 0) {
         try {
-            $sql = "SELECT * FROM users WHERE email = :email";
+            // プレースホルダーを`?`に変更
+            $sql = "SELECT * FROM user WHERE email = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+            if ($stmt === false) {
+                throw new Exception('SQL準備エラー: ' . $conn->error);
+            }
+
+            $stmt->bind_param('s', $email); // `bind_param`を使用して型（`s` = string）を指定
             $stmt->execute();
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
 
             if (!$user) {
                 $errors['login'] = '入力されたメールアドレスのユーザーは存在しません';
-            } elseif (!password_verify($password, $user['password'])) {
+            } elseif ($password !== $user['password']) {
                 $errors['login'] = 'メールアドレスもしくはパスワードが間違っています。';
             } else {
-                $_SESSION['id'] = $user['user_id'];
+                $_SESSION['id'] = $user['id'];
                 header('Location: home.php');
                 exit;
             }
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             $errors['db'] = 'エラーが発生しました: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
         }
     }
 }
 ?>
+
 
 
 
@@ -142,7 +161,7 @@ p.error {
     <h1>ログイン</h1>
         <form action="" method="POST">
             <p>メールアドレス</p><input type="email" name="email">
-            <p>パスワード</p><input type="password" name="pass">
+            <p>パスワード</p><input type="password" name="password">
             <button type="submit" class="btn">ログイン</button>
         </form>
         <p>アカウントをお持ちでないですか？ <a href="touroku.php">新規登録</a></p>
@@ -150,5 +169,4 @@ p.error {
 </div>
 </body>
 </html>
-
 
