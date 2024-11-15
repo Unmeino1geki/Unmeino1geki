@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (count($errors) === 0) {
         try {
-            $sql = "SELECT * FROM users WHERE email = :email";
+            $sql = "SELECT * FROM user WHERE email = :email";
             $stmt = $conn->prepare($sql);
             $stmt->bindValue(':email', $email, PDO::PARAM_STR);
             $stmt->execute();
