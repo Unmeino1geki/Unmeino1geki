@@ -83,17 +83,26 @@ header {
     text-align: center;
 }
  
-.favorites-button .button {
-    background-color: #ff9800;
-}
- 
-.profile-button .button {
-    background-color: #2196F3;
-}
- 
+.favorites-button .button,
+.profile-button .button,
 .logout-button .button {
-    background-color: #f44336;
+    background-color: #ffffff; /* 背景を白に */
+    border: 2px solid #000000; /* 黒いボーダーで深みを追加 */
+    color: #000000; /* 文字の色も黒に変更 */
+    padding: 10px 20px; /* パディングでサイズ調整 */
+    border-radius: 5px; /* 角を少し丸くする */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 影をつけてさらに深みを追加 */
+    font-size: 5px;
+    transition: background-color 0.3s, box-shadow 0.3s; /* ホバー時のアニメーション */
 }
+
+.favorites-button .button:hover,
+.profile-button .button:hover,
+.logout-button .button:hover {
+    background-color: #f0f0f0; /* ホバー時に少し暗めの白に */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); /* ホバー時に影を強調 */
+}
+
  
 .button:hover {
     opacity: 0.8;

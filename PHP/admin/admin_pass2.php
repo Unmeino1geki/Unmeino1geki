@@ -1,10 +1,6 @@
 <?php
 // データベース接続 (PDO を使用)
-const SERVER = 'mysql310.phy.lolipop.lan';
-const DBNAME = 'LAA1517323-circus';
-const USER = 'LAA1517323';
-const PASS = 'Pass0128';
-
+require_once 'connect/dbconnect.php';
 
 try {
     $pdo = new PDO('mysql:host='. SERVER . ';dbname='. DBNAME . ';charset=utf8', USER, PASS);

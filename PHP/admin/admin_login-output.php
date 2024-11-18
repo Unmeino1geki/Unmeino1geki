@@ -3,11 +3,7 @@
 ob_start();
 
 // データベース接続設定
-const SERVER = 'mysql310.phy.lolipop.lan';
-const DBNAME = 'LAA1517323-circus';
-const USER = 'LAA1517323';
-const PASS = 'Pass0128';
-$connect = 'mysql:host='. SERVER. ';dbname='. DBNAME. ';charset=utf8';
+require_once 'connect/dbconnect.php';
 
 // MySQL に接続
 $conn = new mysqli(SERVER, USER, PASS, DBNAME);

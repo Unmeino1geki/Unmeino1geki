@@ -3,10 +3,7 @@ session_start();
 $_SESSION['user_id'] = 23;
 ?>
 <?php
-const SERVER = 'mysql310.phy.lolipop.lan';
-const DBNAME = 'LAA1517323-circus';
-const USER = 'LAA1517323';
-const PASS = 'Pass0128';
+require_once 'connect/dbconnect.php';
 ?>
 
 
