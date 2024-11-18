@@ -1,8 +1,8 @@
 <?php
 session_start();
 // セッションからユーザー情報を取得
-$username = isset($_SESSION['User']['username']) ? $_SESSION['User']['username'] : '未入力';
 $email = isset($_SESSION['User']['email']) ? $_SESSION['User']['email'] : '未入力';
+$username = isset($_SESSION['User']['username']) ? $_SESSION['User']['username'] : '未入力';
 $gender = isset($_SESSION['User']['gender']) ? $_SESSION['User']['gender'] : '未入力';
 $skinType = isset($_SESSION['User']['skin_type']) ? $_SESSION['User']['skin_type'] : '未診断';
 ?>
@@ -83,36 +83,36 @@ $skinType = isset($_SESSION['User']['skin_type']) ? $_SESSION['User']['skin_type
 <body>
     <h1>登録内容確認</h1>
     <div class="confirm-container">
-        <form action="touroku_confirm_output.php" method="POST">
-            <div class="info-row">
-                <label for="username">ユーザー名:</label>
-                <input type="text" name="username" id="username" value="<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>" required>
-            </div>
-            <div class="info-row">
-                <label for="email">メールアドレス:</label>
-                <input type="text" name="email" id="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>" required>
-            </div>
-            <div class="info-row">
-                <label for="gender">性別:</label>
-                <select name="gender" id="gender" required>
-                    <option value="男" <?php if ($gender === '男') echo 'selected'; ?>>男</option>
-                    <option value="女" <?php if ($gender === '女') echo 'selected'; ?>>女</option>
-                    <option value="ジェンダー" <?php if ($gender === 'ジェンダー') echo 'selected'; ?>>ジェンダー</option>
-                    <option value="なし" <?php if ($gender === 'なし') echo 'selected'; ?>>なし</option>
-                </select>
-            </div>
-            <div class="info-row">
-                <label for="skin_type">肌質診断結果:</label>
-                <select name="skin_type" id="skin_type" required>
-                    <option value="dry" <?php if ($skinType === 'dry') echo 'selected'; ?>>乾燥肌</option>
-                    <option value="normal" <?php if ($skinType === 'normal') echo 'selected'; ?>>普通肌</option>
-                    <option value="combination" <?php if ($skinType === 'combination') echo 'selected'; ?>>混合肌</option>
-                    <option value="oily" <?php if ($skinType === 'oily') echo 'selected'; ?>>脂性肌</option>
-                </select>
-            </div>
-
-            <button type="submit" class="confirm-button">登録を確定する</button>
-        </form>
-    </div>
+    <p>以下の内容をご確認ください。「確認し、本人確認メールを送信する」ボタンを押すと、登録されたメールアドレスに本人確認用のリンクが送信されます。</p>
+    <form action="touroku_confirm_output.php" method="post">
+        <div class="info-row">
+            <label for="email">メールアドレス:</label>
+            <input type="text" name="email" id="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>" required>
+        </div>
+        <div class="info-row">
+            <label for="username">ユーザー名:</label>
+            <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>" required>
+        </div>
+        <div class="info-row">
+            <label for="gender">性別:</label>
+            <select name="gender" id="gender" required>
+                <option value="男" <?php if ($gender === '男') echo 'selected'; ?>>男</option>
+                <option value="女" <?php if ($gender === '女') echo 'selected'; ?>>女</option>
+                <option value="ジェンダー" <?php if ($gender === 'ジェンダー') echo 'selected'; ?>>ジェンダー</option>
+                <option value="なし" <?php if ($gender === 'なし') echo 'selected'; ?>>回答しない</option>
+            </select>
+        </div>
+        <div class="info-row">
+            <label for="skin_type">肌質診断結果:</label>
+            <select name="skin_type" id="skin_type" required>
+                <option value="dry" <?php if ($skinType === 'dry') echo 'selected'; ?>>乾燥肌</option>
+                <option value="normal" <?php if ($skinType === 'normal') echo 'selected'; ?>>普通肌</option>
+                <option value="combination" <?php if ($skinType === 'combination') echo 'selected'; ?>>混合肌</option>
+                <option value="oily" <?php if ($skinType === 'oily') echo 'selected'; ?>>脂性肌</option>
+            </select>
+        </div>
+        <button type="submit" class="confirm-button">確認し、本人確認メールを送信する</button>
+    </form>
+</div>
 </body>
 </html>
