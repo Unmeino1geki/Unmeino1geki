@@ -1,8 +1,14 @@
+<?php require 'db-connect.php'?>
 <?php
-const SERVER = 'mysql310.phy.lolipop.lan';
-const DBNAME = 'LAA1517323-circus';
-const USER = 'LAA1517323';
-const PASS = 'Pass0128';
+// セッションを開始
+session_start();
+
+// ユーザーがログインしているか確認
+if (!isset($_SESSION['user_id'])) {
+    // 未ログインの場合はログインページにリダイレクト
+    header("Location: login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +37,7 @@ const PASS = 'Pass0128';
             <li><a href="/top.php">トップ</a></li>
             <li><a href="/change-email.php">メールアドレス変更</a></li>
             <li><a href="/change-password">パスワード変更</a></li>
-            <li><a href="">アカウント削除</a></li>
+            <li><a href="/sakujyo.php">アカウント削除</a></li>
             <li><a href="#">アレルギー追加/変更</a></li>
         </ul>
     </aside>
