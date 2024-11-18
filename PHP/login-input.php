@@ -158,7 +158,7 @@ p.error {
         <?php foreach ($errors as $error): ?>
             <p style="color: red;"><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></p>
         <?php endforeach; ?>  
-    <h1>ログイン</h1>
+    <h1>ログイン </h1>
         <form action="" method="POST">
             <p>メールアドレス</p><input type="email" name="email">
             <p>パスワード</p><input type="password" name="password">
