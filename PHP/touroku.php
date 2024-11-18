@@ -7,45 +7,24 @@ if ($conn->connect_error) {
     die("データベース接続エラー: " . $conn->connect_error);
 }
 
-// トークンをURLパラメータから取得し、サニタイズ
-$token = isset($_GET['token']) ? htmlspecialchars($_GET['token'], ENT_QUOTES, 'UTF-8') : '';
-$email = '';  // 初期化
-
-// トークンの確認メッセージ
-echo "取得したトークン: " . htmlspecialchars($token, ENT_QUOTES, 'UTF-8') . "<br>";
-
-// トークンに対応するメールアドレスをデータベースから取得
-$stmt = $conn->prepare("SELECT test_email FROM email_verifications WHERE token = ?");
-if (!$stmt) {
-    die("クエリ準備エラー: " . $conn->error);
-}
-
-$stmt->bind_param("s", $token);
-
-// クエリの実行とエラーチェック
-if (!$stmt->execute()) {
-    die("クエリエラー: " . $stmt->error);
-}
-
-$result = $stmt->get_result();
-
-// クエリ結果の確認
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $email = $row['test_email'];
-    echo "取得したメールアドレス: " . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . "<br>";
-} else {
-    echo "メールアドレスが見つかりませんでした。トークンが無効または期限切れの可能性があります。<br>";
-   exit(); // メールアドレスが見つからなかった場合はここで処理を終了
-}
-
 // エラーメッセージを表示するための変数を初期化
-$usernameError = $passwordError = $confirmPasswordError = $genderError = "";
-$username = $password = $gender = "";
+$usernameError = $passwordError = $confirmPasswordError = $genderError = $emailError = "";
+$username = $password = $gender = $email = "";
 
 // POSTリクエストを受け取ったときの処理
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $isValid = true;
+
+    // メールアドレスのチェック
+    if (empty($_POST["email"])) {
+        $emailError = "メールアドレスを記入してください";
+        $isValid = false;
+    } elseif (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+        $emailError = "有効なメールアドレスを入力してください";
+        $isValid = false;
+    } else {
+        $email = htmlspecialchars($_POST["email"], ENT_QUOTES, 'UTF-8');
+    }
 
     // ユーザー名のチェック
     if (empty($_POST["username"])) {
@@ -87,12 +66,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // フォームが有効ならセッションに保存し、リダイレクト
     if ($isValid) {
         $_SESSION['User'] = [
-            'username' => $username,
-            'password' => $hashedPassword,
-            'gender' => $gender,
             'email' => $email,
+            'username' => $username,
+            'password' => $password,
+            'gender' => $gender,
         ];
-        header('Location: touroku_output.php?token=' . urlencode($token));
+        header('Location: touroku_output.php');
         exit(); // リダイレクト後にスクリプトを終了
     }
 }
@@ -118,6 +97,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- 新規登録フォーム -->
     <form action="touroku.php" method="post">
+        <label for="email">メールアドレス:</label>
+        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>"><br>
+        <span class="error"><?php echo $emailError; ?></span><br><br>
+
         <label for="username">ユーザー名:</label>
         <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>"><br>
         <span class="error"><?php echo $usernameError; ?></span><br><br>
@@ -132,10 +115,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label>性別:</label>
         <div class="gender">
-            <label><input type="radio" id="male" name="gender" value="male" <?php if($gender == 'male') echo 'checked'; ?>> 男性</label>
-            <label><input type="radio" id="female" name="gender" value="female" <?php if($gender == 'female') echo 'checked'; ?>> 女性</label>
-            <label><input type="radio" id="other" name="gender" value="other" <?php if($gender == 'other') echo 'checked'; ?>> その他</label>
-            <label><input type="radio" id="none" name="gender" value="none" <?php if($gender == 'none') echo 'checked'; ?>> 回答しない</label>
+            <label><input type="radio" id="male" name="gender" value="男性" <?php if($gender == '男性') echo 'checked'; ?>> 男性</label>
+            <label><input type="radio" id="female" name="gender" value="女性" <?php if($gender == '女性') echo 'checked'; ?>> 女性</label>
+            <label><input type="radio" id="other" name="gender" value="ジェンダー" <?php if($gender == 'ジェンダー') echo 'checked'; ?>>ジェンダー</label>
+            <label><input type="radio" id="none" name="gender" value="回答しない" <?php if($gender == '回答しない') echo 'checked'; ?>> 回答しない</label>
         </div>
         <span class="error"><?php echo $genderError; ?></span><br><br>
 

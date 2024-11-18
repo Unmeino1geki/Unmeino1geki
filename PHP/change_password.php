@@ -1,14 +1,4 @@
-<?php
-// セッションを開始
-session_start();
-
-// ユーザーがログインしているか確認
-if (!isset($_SESSION['user_id'])) {
-    // 未ログインの場合はログインページにリダイレクト
-    header("Location: login.php");
-    exit();
-}
-?>
+<?php  require 'db-connect.php' ?>
 
 <!DOCTYPE html>
 <html lang="ja">
