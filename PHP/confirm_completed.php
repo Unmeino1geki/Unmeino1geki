@@ -39,9 +39,10 @@ if ($insert_stmt->execute()) {
     $delete_stmt->bind_param("s", $token);
     $delete_stmt->execute();
 
-    header("refresh:5;url=https://quiet-obi-5971.penne.jp/Unmeino1geki/PHP/login.php");
+    header("refresh:5;url=Unmeino1geki/PHP/login.php");
     echo "登録が完了しました。";
 } else {
+    header("refresh:5;url=Unmeino1geki/PHP/login.php");
     echo "登録処理中にエラーが発生しました。";
 }
 ?>
