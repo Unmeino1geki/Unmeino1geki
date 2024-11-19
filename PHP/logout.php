@@ -6,17 +6,36 @@
     <title>ログアウト</title>
     <style>
         .logout-container {
-  text-align: center;
-  background-color: #f9f5f6;
-  color: #333;
-  padding: 2em;
-}
+            text-align: center;
+            background-color: #e3f2fd; 
+            color: #0d47a1; 
+            padding: 2em;
+            border-radius: 10px; 
+            margin: 50px auto;
+            max-width: 400px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+        }
 
-.button-group .link {
-  color: #666;
-  text-decoration: underline;
-}
-</style>
+        .logout-container h1 {
+            color: #0d47a1; 
+            font-size: 1.8em;
+        }
+
+        .logout-container p {
+            color: #1565c0;
+        }
+
+        .button-group .link {
+            color: #0d47a1; 
+            text-decoration: none; 
+            font-weight: bold;
+        }
+
+        .button-group .link:hover {
+            color: #1565c0; 
+            text-decoration: underline; 
+        }
+    </style>
 </head>
 <body>
 <div class="logout-container">
