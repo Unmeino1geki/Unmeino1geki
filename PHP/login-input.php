@@ -48,8 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if (!$user) {
                 $errors['login'] = '入力されたメールアドレスのユーザーは存在しません';
-            } elseif ($password !== $user['password']) {
-                $errors['login'] = 'メールアドレスもしくはパスワードが間違っています。';
+            // パスワードの検証
+            }elseif (!password_verify($password, $user['password'])) {
+              $errors['login'] = 'メールアドレスもしくはパスワードが間違っています。';
             } else {
                 $_SESSION['id'] = $user['id'];
                 header('Location: home.php');
