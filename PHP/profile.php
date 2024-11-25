@@ -33,7 +33,7 @@ if (!isset($_SESSION['user_id'])) {
     <!-- サイドメニュー -->
     <aside>
         <ul>
-            <li><a href="/top.php">トップ</a></li>
+            <li><a href="../PHP/top.php">トップ</a></li>
             <li><a href="/change-email.php">メールアドレス変更</a></li>
             <li><a href="/change-password">パスワード変更</a></li>
             <li><a href="/sakujyo.php">アカウント削除</a></li>
