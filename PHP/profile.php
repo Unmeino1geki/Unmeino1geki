@@ -34,8 +34,8 @@ if (!isset($_SESSION['user_id'])) {
     <aside>
         <ul>
             <li><a href="../PHP/top.php">トップ</a></li>
-            <li><a href="../PHP/change-email.php">メールアドレス変更</a></li>
-            <li><a href="../PHP/change-password">パスワード変更</a></li>
+            <li><a href="../PHP/change_email.php">メールアドレス変更</a></li>
+            <li><a href="../PHP/change_password">パスワード変更</a></li>
             <li><a href="../PHP/sakujyo.php">アカウント削除</a></li>
             <li><a href="#">アレルギー追加/変更</a></li>
         </ul>
