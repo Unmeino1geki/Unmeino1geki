@@ -1,4 +1,3 @@
-<?php require 'db-connect.php'?>
 <?php
 // セッションを開始
 session_start();
