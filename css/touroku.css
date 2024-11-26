@@ -34,8 +34,11 @@ label {
 }
 
 /* 入力フィールドのスタイル */
+input[type="email"],
 input[type="text"],
 input[type="password"] {
+    appearance: none;
+    outline: none;
     width: 100%;
     padding: 8px;
     margin-bottom: 15px;
