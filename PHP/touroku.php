@@ -25,6 +25,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $email = htmlspecialchars($_POST["email"], ENT_QUOTES, 'UTF-8');
     }
+    //重複チェック
+    $emailCheckQuery = "SELECT * FROM user WHERE email = ?";
+    $stmt = $conn->prepare($emailCheckQuery);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $emailResult = $stmt->get_result();
+
+    if ($emailResult->num_rows > 0) {   
+        $emailError = "このメールアドレスは既に使用されています";
+        $isValid = false;
+    }
+
+    //重複チェック
+    $emailCheckQuery = "SELECT * FROM email_verifications WHERE test_email = ?";
+    $stmt = $conn->prepare($emailCheckQuery);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $emailResult = $stmt->get_result();
+    
+    if ($emailResult->num_rows > 0) {   
+        $emailError = "このメールアドレスは既に仮登録に使用されています<br>登録用メールが届いていないか確認してください";
+        $isValid = false;
+    }
 
     // ユーザー名のチェック
     if (empty($_POST["username"])) {
@@ -32,6 +55,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $isValid = false;
     } else {
         $username = htmlspecialchars($_POST["username"], ENT_QUOTES, 'UTF-8');
+    }
+    //重複チェック
+    $usernameCheckQuery = "SELECT * FROM user WHERE name = ?";
+    $stmt = $conn->prepare($usernameCheckQuery);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $usernameResult = $stmt->get_result();
+
+    if ($usernameResult->num_rows > 0) {
+        $usernameError = "このユーザー名は既に使用されています";
+        $isValid = false;
     }
 
     // パスワードのチェック
@@ -84,6 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新規登録</title>
     <link rel="stylesheet" href="../CSS/touroku.css">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <style>
         .error {
             color: red;
@@ -97,20 +132,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- 新規登録フォーム -->
     <form action="touroku.php" method="post">
+        
         <label for="email">メールアドレス:</label>
-        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>"><br>
+        <input class="inputform" type="email" id="email" name="email" placeholder="test@example.com" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>"><br>
         <span class="error"><?php echo $emailError; ?></span><br><br>
 
         <label for="username">ユーザー名:</label>
-        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>"><br>
+        <input class="inputform" type="text" id="username" name="username" placeholder="真夜中のサーカス" value="<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>"><br>
         <span class="error"><?php echo $usernameError; ?></span><br><br>
 
         <label for="password">パスワード:</label>
-        <input type="password" id="password" name="password"><br>
+        <div id="fieldPassword">
+            <input class="inputform" type="password" id="password" name="password" placeholder="英数字を含む8文字以上16文字以内">
+            <span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>
+        </div>
         <span class="error"><?php echo $passwordError; ?></span><br><br>
 
         <label for="confirm_password">確認用パスワード:</label>
-        <input type="password" id="confirm_password" name="confirm_password"><br>
+        <div id="fieldPassword">
+            <input class="inputform" type="password" id="confirm_password" name="confirm_password" placeholder="上記と同じパスワードを入力してください">
+            <span id="confirm_buttonEye" class="fa fa-eye" onclick="pushHideConfirmButton()"></span>
+        </div>
         <span class="error"><?php echo $confirmPasswordError; ?></span><br><br>
 
         <label>性別:</label>
@@ -125,5 +167,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="submit" value="次へ">
     </form>
 </div>
+
+<script language="javascript">
+    function pushHideButton() {
+        var txtPass = document.getElementById("password");
+        var btnEye = document.getElementById("buttonEye");
+        if (txtPass.type === "text") {
+            txtPass.type = "password";
+            btnEye.className = "fa fa-eye";
+        } else {
+            txtPass.type = "text";
+            btnEye.className = "fa fa-eye-slash";
+        }
+    }
+    function pushHideConfirmButton() {
+        var txtPass = document.getElementById("confirm_password");
+        var btnEye = document.getElementById("confirm_buttonEye");
+        if (txtPass.type === "text") {
+            txtPass.type = "password";
+            btnEye.className = "fa fa-eye";
+        } else {
+            txtPass.type = "text";
+            btnEye.className = "fa fa-eye-slash";
+        }
+    }
+</script>
+
 </body>
 </html>

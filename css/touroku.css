@@ -6,7 +6,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 /* フォームコンテナのスタイル */
@@ -15,7 +14,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 400px;
 }
 
 /* タイトルのスタイル */
@@ -34,18 +33,53 @@ label {
 }
 
 /* 入力フィールドのスタイル */
-input[type="email"],
-input[type="text"],
-input[type="password"] {
+input[type="email"] {
     appearance: none;
     outline: none;
     width: 100%;
     padding: 8px;
-    margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 14px;
+}
+
+#username{
+    appearance: none;
+    outline: none;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/*パスワード（確認も同様に）入力フォーム*/
+input[type="password"],
+input[type="text"]{
+    width: 90%;
+    outline: none;/*フォーカス時の線を消す*/
+    border: none;/*デフォの枠線を消す*/
+}
+
+#fieldPassword {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    border-width: thin;
+    border-style: solid;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+#buttonEye{
+    text-align: right;
+}
+
+#confirm_buttonEye{
+    text-align: right;
 }
 
 /* 性別ラジオボタンのスタイル */
@@ -75,3 +109,4 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #45a049;
 }
+
