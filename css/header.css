@@ -1,131 +1,16 @@
+/* カスタムスタイル */
 header {
-    background-color: #f8f8f8; /* 背景色 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 影 */
-    padding: 10px 20px; /* パディング */
-    position: fixed; /* ヘッダーを固定 */
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000; /* 前面に表示 */
+    z-index: 1000;
     box-sizing: border-box;
 }
- 
-/* ヘッダーコンテナの中央寄せと幅の最大制限 */
-.header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
- 
-/* ロゴ */
-.logo img {
-    width: 50px;
-    height: auto;
-}
- 
-/* 検索バー */
-.search-bar {
-    flex-grow: 1; /* 検索バーを残りの幅に自動調整 */
-    margin: 0 20px;
-}
- 
-.search-bar form {
-    display: flex;
-    width: 100%;
-}
- 
-.search-input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
-    font-size: 16px;
-}
- 
-.search-button {
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 0 4px 4px 0;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
- 
-.search-button:hover {
-    background-color: #45a049;
-}
- 
-/* プルダウンメニュー */
-.filter-dropdown select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-}
- 
-/* ボタン */
-.favorites-button, .profile-button, .logout-button {
-    margin-left: 10px;
-}
- 
-.button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    font-size: 16px;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-}
- 
-.favorites-button .button,
-.profile-button .button,
-.logout-button .button {
-    background-color: #ffffff; /* 背景を白に */
-    border: 2px solid #000000; /* 黒いボーダーで深みを追加 */
-    color: #000000; /* 文字の色も黒に変更 */
-    padding: 10px 20px; /* パディングでサイズ調整 */
-    border-radius: 5px; /* 角を少し丸くする */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 影をつけてさらに深みを追加 */
-    font-size: 5px;
-    transition: background-color 0.3s, box-shadow 0.3s; /* ホバー時のアニメーション */
-}
-
-.favorites-button .button:hover,
-.profile-button .button:hover,
-.logout-button .button:hover {
-    background-color: #f0f0f0; /* ホバー時に少し暗めの白に */
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); /* ホバー時に影を強調 */
-}
-
- 
-.button:hover {
-    opacity: 0.8;
-}
- 
-/* レスポンシブ対応 - モバイルでは縦並び */
-@media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .search-bar {
-        margin: 10px 0;
-        width: 100%;
-    }
- 
-    .filter-dropdown, .favorites-button, .profile-button, .logout-button {
-        margin-top: 10px;
-        width: 100%;
-    }
- 
-    .button {
-        width: 100%;
-        text-align: center;
-    }
+.menu {
+    transition: max-height 0.3s ease-in-out;
+    overflow: hidden;
 }

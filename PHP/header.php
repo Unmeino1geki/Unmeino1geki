@@ -4,28 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ヘッダー</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../CSS/feader.css">
 
-    <style>
-
-        /* カスタムスタイル */
-        header {
-            background-color: #f8f8f8;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 10px 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            box-sizing: border-box;
-        }
-        .menu {
-            transition: max-height 0.3s ease-in-out;
-            overflow: hidden;
-        }
-
-    </style>
+    <link rel="stylesheet" href="../CSS/header.css">
 
 </head>
 <body class="bg-gray-100">
@@ -37,7 +17,7 @@
         <!-- ロゴ -->
 
         <div class="flex items-center">
-            <img src="https://placehold.co/100x50" alt="運命の一撃ロゴ" class="mr-4">
+        <img src="../IMG/うんめい.png" alt="運命の一撃ロゴ" class="mr-4" width="100" height="50">
             <h1 class="text-lg font-bold text-yellow-600"> ～ あなたの肌に一撃を ～ </h1>
         </div>
 
@@ -53,7 +33,7 @@
     <div id="menu" class="menu bg-white shadow-lg max-h-0">
         <nav class="p-4">
             <div class="mb-4">
-                <input type="text" class="w-full p-4  rounded">
+                <input type="" class="w-full p-4  rounded">
             </div>
 
             <!-- 検索バー -->
@@ -95,18 +75,6 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-    <!-- JavaScript -->
-    <script>
-        const menuButton = document.getElementById('menuButton');
-        const menu = document.getElementById('menu');
+    <script src="../JavaScript/header.js"></script>
 
-        menuButton.addEventListener('click', () => {
-            if (menu.style.maxHeight === '0px' || !menu.style.maxHeight) {
-                menu.style.maxHeight = menu.scrollHeight + 'px';
-            } else {
-                menu.style.maxHeight = '0px';
-            }
-        });
-    </script>
-</body>
 </html>
