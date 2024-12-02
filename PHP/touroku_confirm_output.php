@@ -32,7 +32,7 @@ $stmt->bind_param("sssssss",$username,$email,$token,$expires_at,$hashed_password
 $stmt->execute();
 
 // 認証リンクの生成
-$verification_link = "https://quiet-obi-5971.penne.jp/Unmeino1geki/PHP/confirm_completed.php?token=" . $token;
+$verification_link = "https://aso2201376.boo.jp/Unmeino1geki/PHP/confirm_completed.php?token=" . $token;
 
 // メール送り主のメアド（ロリポップのドメインメールを使用）
 $emailfrom = "info@quiet-obi-5971.penne.jp"; // ロリポップで設定したドメインメール
@@ -42,7 +42,7 @@ $from_name = "運命の一撃運営チーム";
 $encoded_from = mb_encode_mimeheader($from_name) . " <" . $emailfrom . ">";
     
 // メールの件名
-$subject = "メールアドレス認証";
+$subject = "登録用メール";
     
 // メールの内容
 $mailBody = "新規登録リンク\n次のリンクをクリックして、ユーザー情報を登録してください\n\n$verification_link";
@@ -52,8 +52,50 @@ $headers = 'From: ' . $encoded_from . "\r\n" .
            'X-Mailer: PHP/' . phpversion();
 // メールを送信
 if (mail($email, $subject, $mailBody, $headers)) {
-    echo "メールを送信しました。確認してください。";
 } else {
     echo "メールの送信に失敗しました。";
 }
 ?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登録内容確認</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>メール送信完了しました</h2>
+        <p>こちらのページは閉じていただいて構いません</p>
+    </div>
+</body>
+</html>
