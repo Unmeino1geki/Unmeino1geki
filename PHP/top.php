@@ -9,6 +9,11 @@ session_start();
     <title>商品一覧</title>
     <link rel="stylesheet" href="../CSS/top.css">
 </head>
+
+<?php
+require 'header.php';
+?>
+
 <div class="slider-container">
   <div class="slider">
     <!-- 自動スライドの広告部分 -->
