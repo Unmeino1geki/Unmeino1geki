@@ -34,7 +34,7 @@
         <div>
             <h2>貴方の肌に一撃を</h2>
             <h1>運命の一撃</h1>
-            <p class="btn-border-radius"><a href="#">新規登録</a></p>
+            <p class="btn-border-radius"><a href="touroku.php">新規登録</a></p>
         </div>
     </div>
 
@@ -42,7 +42,7 @@
         <div>
             <h1>運命の一撃</h1>
             <p>もう、調べる時間なんて<br>必要ない</p>
-            <p class="btn-border-radius"><a href="#">新規登録</a></p>
+            <p class="btn-border-radius"><a href="touroku.php">新規登録</a></p>
         </div>
     </div>
 
@@ -50,7 +50,7 @@
         <div>
             <h1>貴方の肌に<br>輝きを！</h1>
             <p>ここで出会える<br>運命の”一”本を</p>
-            <p class="btn-border-radius"><a href="#">新規登録</a></p>
+            <p class="btn-border-radius"><a href="touroku.php">新規登録</a></p>
         </div>
     </div>
 </aside>
