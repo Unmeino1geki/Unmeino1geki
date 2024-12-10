@@ -1,50 +1,74 @@
-<!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ページタイトル</title>
-<link rel="stylesheet" href="css/header.css"> <!-- CSSファイルのリンク -->
-</head>
-<body>
-<header>
-<div class="header-container">
-<!-- 1. ページアイコン -->
-<div class="logo">
-<img src="path/to/logo.png" alt="サイトロゴ" width="50"> <!-- ロゴのパスとサイズを指定 -->
-</div>
-<!-- 2. 検索バー -->
-<div class="search-bar">
-<form action="search.php" method="GET">
-<input type="text" name="query" placeholder="検索..." class="search-input">
-<button type="submit" class="search-button">🔍</button>
-</form>
-</div>
-<!-- 3. 絞り込みプルダウン -->
-<div class="filter-dropdown">
-<select name="filter" id="filter" onchange="location.href=this.value;">
-<option value="all">すべて</option>
-<option value="category1.php">カテゴリ1</option>
-<option value="category2.php">カテゴリ2</option>
-<option value="category3.php">カテゴリ3</option>
-</select>
-</div>
-<!-- 4. いいね一覧に飛ぶボタン -->
-<div class="favorites-button">
-<a href="favorites.php" class="button">いいね一覧</a>
-</div>
-<!-- 5. プロフィールに飛ぶボタン -->
-<div class="profile-button">
-<a href="profile.php" class="button">プロフィール</a>
-</div>
-<!-- 6. ログアウトボタン -->
-<div class="logout-button">
-<a href="logout.php" class="button logout">ログアウト</a>
-</div>
-</div>
-</header>
-</body>
-</html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ヘッダー</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="../CSS/header.css">
 
+</head>
+<body class="bg-gray-100">
+
+    <!-- ヘッダー -->
+
+    <header class="flex items-center justify-between bg-gray-100 shadow-md p-2 fixed top-0 left-0 w-full z-50 ">
+        <!-- ロゴ -->
+        <div class="flex items-center">
+            <img src="../IMG/うんめい.png" alt="運命の一撃ロゴ" class="mr-4 ml-1" width="100" height="50">
+            <h1 class="text-lg font-bold text-yellow-600 ml-2 mr-2"><div class="a">あなたの肌に一撃を</div></h1>
+        </div>
+
+        <!-- 検索バー -->
+                    <form ation="search.php" method="GET" class="flex items-center w-2/3 mt-0 ml-2 mr-2">
+                <input 
+                    type="search"
+                    name="query"
+                    placeholder="ブランド名、カテゴリ名、商品名で探す" 
+                    class="w-full p-2 border border-4 border-gray-200 rounded-l-lg focus:outline-none"
+                    autocomplete="given-name"
+                    value="<?php echo isset($_GET['query']) ? htmlspecialchars($_GET['query'], ENT_QUOTES) : ''; ?>">
+                
+                <button 
+                    type="submit" 
+                    class="p-2 border border-4  bg-gray-200 text-black rounded-r-lg hover:bg-gray-200 focus:outline-none"
+                >
+                <div class="dli-search"></div>
+
+                </button>
+            </form>
+        
+            <!-- 候補リスト -->
+        <div id="autocompleteList" class="autocomplete-list hidden"></div>
+    </div>
+
+         <!-- ハンバーガーメニュー -->
+        <button id="menuButton" class="text-3xl focus:outline-none ml-4 mr-4">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- ハンバーガーメニュー内容 -->
+
+    <div id="menu" class="menu bg-white shadow-lg max-h-0 justify-between">
+        <div class="p-4 flex ">
+
+
+            <!-- ボタン類 -->
+
+                <a href="favorites.php" class="w-1/3  mr-2 ml-2 py-3 px- bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-pink-200">いいね</button></a>
+                <a href="profile.php" class="w-1/3 mr-2 ml-2 py-3 px-4 bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-blue-200">プロフィール</a></button>
+                <a href="logout.php" class="w-1/3 mr-2 ml-2 py-3 px-4 bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-red-300">ログアウト</a></button>
+
+            
+        </div>
+    </div>
+
+    <!-- Font Awesome for icons -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <script src="../JavaScript/header.js"></script>
+
+</html>
  
