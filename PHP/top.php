@@ -1,5 +1,6 @@
 <?php 
-session_start(); 
+session_start();
+require 'header.php'
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -9,11 +10,6 @@ session_start();
     <title>商品一覧</title>
     <link rel="stylesheet" href="../CSS/top.css">
 </head>
-
-<?php
-require 'header.php';
-?>
-
 <div class="slider-container">
   <div class="slider">
     <!-- 自動スライドの広告部分 -->
@@ -40,7 +36,7 @@ require 'header.php';
   <div class="manual-slider-box">
     <!-- 手動スライド -->
     <div class="manual-slider">
-      <button id="left-btn">←</button>
+      <button class="manual-button" id="left-btn">←</button>
       <div class="manual-slider-images" id="slider-images">
         <img src="../IMG/DHCVC.png" class="slider-image" />
         <img src="../IMG/yoko1.jpg" class="slider-image" />
@@ -50,7 +46,7 @@ require 'header.php';
         <img src="../IMG/yoko1.jpg" class="slider-image" />
         <!-- 他の画像 -->
       </div>
-      <button id="right-btn">→</button>
+      <button class="manual-button" id="right-btn">→</button>
     </div>
   </div>
 </div>
