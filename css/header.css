@@ -11,6 +11,77 @@ header {
     box-sizing: border-box;
 }
 .menu {
-    transition: max-height 0.3s ease-in-out;
-    overflow: hidden;
+    position: fixed; /* 固定位置 */
+    top: 10px; /* ヘッダーの上部からスタート */
+    left: 0; /* 左端に揃える */
+    width: 100%; /* 横幅を画面全体に設定 */
+    height: 50vh; /* 縦幅を画面全体に設定 */
+    background-color: white; /* 背景色を白に */
+    z-index: 1001; /* ヘッダーの下に隠れないように調整 */
+    max-height: 0; /* 初期状態は非表示 */
+    overflow: hidden; /* 内容がはみ出さないように設定 */
+    transition: max-height 0.3s ease-in-out; /* アニメーション効果 */
 }
+
+.menu.open {
+    max-height: 100vh; /* メニューが開いた状態で全画面に表示 */
+}
+
+header + .menu {
+    margin-top: 60px; /* ヘッダーの高さ分メニューを下げる（必要に応じて調整） */
+}
+
+/* ハンバーガーメニューのリンクデザイン */
+.menu nav a {
+    display: block; /* 各リンクをブロック表示 */
+    padding: 15px; /* 余白を設定 */
+    text-decoration: none; /* 下線を削除 */
+    color: #333; /* テキストの色 */
+    border-bottom: 1px solid #ddd; /* 各リンクの間に線を追加 */
+}
+
+/* リンクのホバー効果 */
+.menu nav a:hover {
+    background-color: #f8f8f8; /* ホバー時の背景色 */
+    color: #000; /* ホバー時のテキスト色 */
+}
+
+/* 初期状態では表示 */
+.a {
+    display: block;
+}
+
+/* 横幅480px以下のスクリーン（スマホ）では非表示 */
+@media screen and (max-width: 670px) {
+    .a {
+        display: none;
+    }
+}
+
+.dli-search {
+    display: inline-block;
+    vertical-align: middle;
+    right: calc(20% + 0em);
+    color: #333;
+    line-height: 1;
+    width: 0.75em;
+    height: 0.75em;
+    border: 0.25em solid currentColor;
+    border-radius: 50%;
+    box-sizing: content-box;
+    position: relative;
+    top: -0.3em;
+  }
+  
+  .dli-search::before {
+    content: '';
+    position: absolute;
+    top: calc(85.35534% + 0.07071em);
+    left: calc(85.35534% + 0.07071em);
+    width: 0.75em;
+    height: 0.25em;
+    background: currentColor;
+    border-radius: 0 0.1em 0.1em 0;
+    transform: translateY(-50%) rotate(45deg);
+    transform-origin: left center;
+  }

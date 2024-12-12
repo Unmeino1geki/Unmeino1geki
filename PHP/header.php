@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ヘッダー</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
+    
     <link rel="stylesheet" href="../CSS/header.css">
 
 </head>
@@ -12,63 +12,51 @@
 
     <!-- ヘッダー -->
 
-    <header class="flex items-center justify-between">
-
+    <header class="flex items-center justify-between bg-gray-100 shadow-md p-2 fixed top-0 left-0 w-full z-50 ">
         <!-- ロゴ -->
-
         <div class="flex items-center">
-        <img src="../IMG/うんめい.png" alt="運命の一撃ロゴ" class="mr-4" width="100" height="50">
-            <h1 class="text-lg font-bold text-yellow-600"> ～ あなたの肌に一撃を ～ </h1>
+            <img src="../IMG/うんめい.png" alt="運命の一撃ロゴ" class="mr-4 ml-1" width="100" height="50">
+            <h1 class="text-lg font-bold text-yellow-600 ml-2 mr-2"><div class="a">あなたの肌に一撃を</div></h1>
         </div>
 
-        <!-- ハンバーガーメニュー -->
+        <!-- 検索バー -->
+                    <form ation="search.php" method="GET" class="flex items-center w-2/3 mt-0 ml-2 mr-2">
+                <input 
+                    type="search"
+                    name="query"
+                    placeholder="ブランド名、カテゴリ名、商品名で探す" 
+                    class="w-full p-2 border border-4 border-gray-200 rounded-l-lg focus:outline-none"
+                    value="<?php echo isset($_GET['query']) ? htmlspecialchars($_GET['query'], ENT_QUOTES) : ''; ?>">
+                
+                <button 
+                    type="submit" 
+                    class="p-2 border border-4  bg-gray-200 text-black rounded-r-lg hover:bg-gray-200 focus:outline-none"
+                >
+                <div class="dli-search"></div>
 
-        <button id="menuButton" class="text-2xl focus:outline-none">
+                </button>
+            </form>
+        
+         <!-- ハンバーガーメニュー -->
+        <button id="menuButton" class="text-3xl focus:outline-none ml-4 mr-4">
             <i class="fas fa-bars"></i>
         </button>
     </header>
 
     <!-- ハンバーガーメニュー内容 -->
 
-    <div id="menu" class="menu bg-white shadow-lg max-h-0">
-        <nav class="p-4">
-            <div class="mb-4">
-                <input type="" class="w-full p-4  rounded">
-            </div>
+    <div id="menu" class="menu bg-white shadow-lg max-h-0 justify-between">
+        <div class="p-4 flex ">
 
-            <!-- 検索バー -->
-            
-                <form action="search.php" method="GET">
-
-                <div class="flex space-y-0 space-x-0 mb-4">
-                <input type="search" placeholder=" 検索..." class="w-5/6 p-2 border-solid border-4 border-black-300 rounded-l-lg">
-                <button class=" w-1/6 py-2 bg-gray-200 text-black rounded-r-lg hover:bg-gray-300">🔍</button>
-                </div>
-
-                </form>
-            
-            <!-- カテゴリ選択 -->
-
-            <ul class="flex space-y-2 space-x-2 mb-4">
-              <a href="#"></a>
-                <a href="#" class="w-1/5 py-2 px-4 bg-gray-100 text-black text-center border-solid border-4 rounded hover:bg-gray-300">化粧水</a>
-                <a href="#" class="w-1/5 py-2 px-4 bg-gray-100 text-black text-center border-solid border-4 rounded hover:bg-gray-300">美容液</a>
-                <a href="#" class="w-1/5 py-2 px-4 bg-gray-100 text-black text-center border-solid border-4 rounded hover:bg-gray-300">乳液</a>
-                <a href="#" class="w-1/5 py-2 px-4 bg-gray-100 text-black text-center border-solid border-4 rounded hover:bg-gray-300">洗顔料</a>
-                <a href="#" class="w-1/5 py-2 px-4 bg-gray-100 text-black text-center border-solid border-4 rounded hover:bg-gray-300"></a>
-              <a href="#"></a>
-            </ul>
 
             <!-- ボタン類 -->
 
-            <div class="flex space-y-2 space-x-2 mb-4">
-              <a href="#"></a>
-                <a href="favorites.php" class="w-1/3 py-3 px- bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-pink-200">いいね</button></a>
-                <a href="profile.php" class="w-1/3 py-3 px-4 bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-blue-200">プロフィール</a></button>
-                <a href="logout.php" class="w-1/3 py-3 px-4 bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-red-300">ログアウト</a></button>
-              <a href="#"></a>
-            </div>
-        </nav>
+                <a href="favorites.php" class="w-1/3  mr-2 ml-2 py-3 px- bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-pink-200">いいね</button></a>
+                <a href="profile.php" class="w-1/3 mr-2 ml-2 py-3 px-4 bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-blue-200">プロフィール</a></button>
+                <a href="logout.php" class="w-1/3 mr-2 ml-2 py-3 px-4 bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-red-300">ログアウト</a></button>
+
+            
+        </div>
     </div>
 
     <!-- Font Awesome for icons -->

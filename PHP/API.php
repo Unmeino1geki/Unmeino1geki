@@ -7,17 +7,10 @@
     <link rel="stylesheet" href="../CSS/API.css"> <!-- CSSパスの確認 -->
 </head>
 <body>
-    <header class="header">
-        <h1 class="logo">運命の一撃.com</h1>
-        <div class="search-container">
-            <form method="GET">
-                <input type="text" name="query" id="searchBar" placeholder="美容品を検索" 
-                    value="<?php echo isset($_GET['query']) ? htmlspecialchars($_GET['query'], ENT_QUOTES) : ''; ?>">
-                <button type="submit">🔍</button>
-            </form>
-        </div>
-    </header>
 
+<?php
+require 'header.php';
+?>
     <div class="product-grid">
     <?php
 if (isset($_GET['query']) && $_GET['query'] !== '') {

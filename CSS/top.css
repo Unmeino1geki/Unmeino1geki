@@ -1,0 +1,103 @@
+/* 全体レイアウト */
+.slider-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 自動スライド部分 */
+.auto-slider {
+  width: 30vh;
+  height: 85vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.auto-slider .slide {
+  margin-top: 10vh;
+  margin-left: 5vh;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transition: opacity 1s ease;
+  opacity: 0; /* 非表示 */
+}
+
+.auto-slider .slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.auto-slider .slide.active {
+  opacity: 1; /* 表示中のスライドのみ表示 */
+}
+
+.manual-slider-box{
+  margin-top: 10vh;
+  margin-right: 20vh;
+  padding-left: 10vh;
+  padding-right: 10vh;
+}
+
+/*サブテーマ*/
+.subtitle{
+  margin-top: 10vh;
+  width: 25vh;
+}
+
+.subtitle-box{
+  background-image: url("../IMG/subtitle-background.png");
+  height: 75vh;
+  margin-top: 10vh;
+}
+
+
+/* 手動スライド部分 */
+.manual-slider {
+  width: 600px; /* 正確なサイズに調整 */
+  height: 250px;
+  overflow: hidden;
+  position: relative;
+}
+
+.manual-slider-images {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slider-image {
+  width: 599.72px; /* 手動スライドの画像幅 */
+  height: 250px;
+  text-align: center;
+  line-height: 250px;
+  font-size: 24px;
+  background-color: lightgray;
+}
+
+/* ボタンのデザイン */
+.manual-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+#left-btn {
+  left: 10px;
+  z-index: 1;
+}
+
+#right-btn {
+  right: 10px;
+  z-index: 1;
+}

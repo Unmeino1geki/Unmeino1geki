@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
+
 }
 
 /* ヘッダー */
@@ -45,6 +46,9 @@ button {
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* カラム幅を調整 */
     gap: 20px; /* 各商品間のスペース */
     padding: 20px;
+    
+    padding-top: 100px;
+
     max-width: 1200px;
     margin: 0 auto;
 }
