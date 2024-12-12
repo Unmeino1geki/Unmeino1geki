@@ -1,13 +1,7 @@
 <?php
 // セッションを開始
-session_start();
 
-// ユーザーがログインしているか確認
-if (!isset($_SESSION['user_id'])) {
-    // 未ログインの場合はログインページにリダイレクト
-    header("Location: login.php");
-    exit();
-}
+session_start();
 ?>
 
 <html lang="ja">
