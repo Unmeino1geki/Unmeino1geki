@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               $errors['login'] = 'メールアドレスもしくはパスワードが間違っています。';
             } else {
                 $_SESSION['id'] = $user['id'];
-                header('Location: home.php');
+                header('Location: top.php');
                 exit;
             }
         } catch (Exception $e) {
