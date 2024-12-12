@@ -1,10 +1,6 @@
 <?php
 session_start();
-
-const SERVER = 'mysql310.phy.lolipop.lan';
-const DBNAME = 'LAA1517323-circus';
-const USER = 'LAA1517323';
-const PASS = 'Pass0128';
+require 'connect/connect.php';
 
 $errors = []; // エラーメッセージを格納する配列
 
