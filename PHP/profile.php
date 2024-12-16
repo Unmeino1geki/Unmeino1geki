@@ -1,14 +1,31 @@
 <?php
-// セッションを開始
+// 必要な設定・共通処理をインクルード
+require_once 'connect/dbconnect.php'; // DB接続情報などの設定を格納
 session_start();
 
-// ユーザーがログインしているか確認
+// セッションチェック
 if (!isset($_SESSION['user_id'])) {
-    // 未ログインの場合はログインページにリダイレクト
-    echo "<p>ログインが必要です。ログインページに遷移します。</p>";
-    header("Location: login.php");
+    redirectWithMessage("ログインが必要です。ログインページに遷移します。", "login-input.php");
+}
+
+// 共通関数：リダイレクトを行う
+function redirectWithMessage($message, $url, $delay = 3) {
+    // HTMLの出力を制御
+    echo "<p>$message</p>";
+    header("Refresh: $delay; url=$url");
     exit();
 }
+
+// DB接続
+try {
+    $pdo = new PDO('mysql:host=' . SERVER . ';dbname=' . DBNAME . ';charset=utf8', USER, PASS);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("データベース接続エラー: " . $e->getMessage());
+}
+
+// 現在のユーザーID
+$userId = $_SESSION['user_id'];
 ?>
 
 <!DOCTYPE html>
