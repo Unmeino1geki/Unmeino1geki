@@ -106,52 +106,52 @@ session_start();
             {
                 question: "肌のタイプはどれに当てはまりますか？",
                 options: [
-                    { text: "乾燥肌", type: "dry" },
-                    { text: "普通肌", type: "normal" },
-                    { text: "混合肌", type: "combination" },
-                    { text: "脂性肌", type: "oily" }
+                    { text: "乾燥肌", type: "乾燥肌" },
+                    { text: "普通肌", type: "普通肌" },
+                    { text: "混合肌", type: "混合肌" },
+                    { text: "脂性肌", type: "油性肌" }
                 ]
             },
             {
                 question: "普段、肌に触れたときの感覚はどのように感じますか？",
                 options: [
-                    { text: "常にしっとりしている", type: "normal" },
-                    { text: "時々乾燥していると感じる", type: "combination" },
-                    { text: "ほとんどの場合、乾燥している", type: "dry" },
-                    { text: "テカリがちで、触ると脂っぽく感じる", type: "oily" }
+                    { text: "常にしっとりしている", type: "普通肌" },
+                    { text: "時々乾燥していると感じる", type: "混合肌" },
+                    { text: "ほとんどの場合、乾燥している", type: "乾燥肌" },
+                    { text: "テカリがちで、触ると脂っぽく感じる", type: "油性肌" }
                 ]
             },
             {
                 question: "日常の肌ケアで、どのような悩みを感じることが多いですか？",
                 options: [
-                    { text: "乾燥によるかさつきや粉ふき", type: "dry" },
-                    { text: "テカリや油浮きが気になる", type: "oily" },
-                    { text: "肌荒れや赤みが出やすい", type: "combination" },
-                    { text: "毛穴の目立ちや黒ずみが気になる", type: "oily" }
+                    { text: "乾燥によるかさつきや粉ふき", type: "乾燥肌" },
+                    { text: "テカリや油浮きが気になる", type: "油性肌" },
+                    { text: "肌荒れや赤みが出やすい", type: "混合肌" },
+                    { text: "毛穴の目立ちや黒ずみが気になる", type: "油性肌" }
                 ]
             },
             {
                 question: "朝、洗顔後の肌の感覚はどれに近いですか？",
                 options: [
-                    { text: "すぐに乾燥してつっぱる感じがする", type: "dry" },
-                    { text: "少し乾燥するが、すぐに気にならなくなる", type: "combination" },
-                    { text: "一日中しっとりしている", type: "normal" },
-                    { text: "テカリが気になり、すぐに脂っぽくなる", type: "oily" }
+                    { text: "すぐに乾燥してつっぱる感じがする", type: "乾燥肌" },
+                    { text: "少し乾燥するが、すぐに気にならなくなる", type: "混合肌" },
+                    { text: "一日中しっとりしている", type: "普通肌" },
+                    { text: "テカリが気になり、すぐに脂っぽくなる", type: "油性肌" }
                 ]
             },
             {
                 question: "季節によって肌の状態が変わると感じますか？",
                 options: [
-                    { text: "はい、季節ごとに乾燥や脂っぽさが変わる", type: "combination" },
-                    { text: "いいえ、あまり変わらない", type: "normal" },
-                    { text: "少しだけ変わるが、それほど気にならない", type: "normal" }
+                    { text: "はい、季節ごとに乾燥や脂っぽさが変わる", type: "混合肌" },
+                    { text: "いいえ、あまり変わらない", type: "普通肌" },
+                    { text: "少しだけ変わるが、それほど気にならない", type: "普通肌" }
                 ]
             }
         ];
 
         let currentQuestion = 0;
         let selectedAnswer = null;
-        const skinTypeScores = { dry: 0, normal: 0, combination: 0, oily: 0 };
+        const skinTypeScores = { 乾燥肌: 0, 普通肌: 0, 混合肌: 0, 油性肌: 0 };
 
         function showQuestion() {
             const questionContainer = document.getElementById('question-text');
@@ -178,66 +178,57 @@ session_start();
         }
 
         function nextQuestion() {
-            // 選択肢が選ばれていない場合は、次の質問に進まない
-            if (!selectedAnswer) {
-                alert("回答を選択してください。");
-                return;
-            }
+    if (selectedAnswer) {
+        // 回答を記録
+        skinTypeScores[selectedAnswer]++;
 
-            // 選択した肌タイプにポイントを加算
-            skinTypeScores[selectedAnswer]++;
+        if (currentQuestion < questions.length - 1) {
+            // 次の質問に進む
+            currentQuestion++;
+            showQuestion();
+        } else {
+            // 最終結果を計算
+            const finalType = Object.keys(skinTypeScores).reduce((a, b) => 
+                skinTypeScores[a] > skinTypeScores[b] ? a : b
+            );
 
-            // 最後の質問に達していない場合は次の質問を表示
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                showQuestion();
-            } else {
-                showResult();
-            }
-        }
-
-        function showResult() {
-            // 肌タイプのスコアをもとに最大スコアのタイプを判定
-            const skinType = Object.keys(skinTypeScores).reduce((a, b) => skinTypeScores[a] > skinTypeScores[b] ? a : b);
-            
-            // セッションに肌タイプを保存するために、PHPでの再読み込みなしでデータを送信
+            // サーバーに送信
             fetch("save_skin_type.php", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ skin_type: skinType })
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ skin_type: finalType })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // 結果の表示と「登録内容を確認」ボタンの表示
-                    const questionContainer = document.getElementById("question-container");
-                    questionContainer.innerHTML = `<p class="result-text">肌質診断が完了しました！結果は ${skinType} です。</p>`;
+                    document.getElementById('question-container').innerHTML = 
+                        `<p class="result-text">診断結果: ${finalType === "乾燥肌" ? "乾燥肌" :
+                        finalType === "普通肌" ? "普通肌" :
+                        finalType === "混合肌" ? "混合肌" :
+                        "脂性肌"}</p>`;
 
-                    const confirmButton = document.createElement("button");
-                    confirmButton.textContent = "登録内容を確認";
-                    confirmButton.id = "confirm-button";
-                    confirmButton.style.marginTop = "20px";
-                    confirmButton.style.padding = "10px 20px";
-                    confirmButton.style.fontSize = "1em";
-                    confirmButton.style.backgroundColor = "#4a90e2";
-                    confirmButton.style.color = "white";
-                    confirmButton.style.border = "none";
-                    confirmButton.style.borderRadius = "5px";
-                    confirmButton.style.cursor = "pointer";
-                    confirmButton.style.transition = "background-color 0.3s";
-                    confirmButton.onclick = () => {
+                    // 確認画面に進むボタンを表示
+                    const nextButton = document.getElementById('next-button');
+                    nextButton.textContent = "確認画面へ";
+                    nextButton.onclick = function() {
                         window.location.href = "touroku_confirm.php"; // 確認ページに移動
                     };
-
-                    questionContainer.appendChild(confirmButton);
-                    document.getElementById("next-button").style.display = "none";
                 } else {
-                    alert("診断結果の保存に失敗しました。もう一度お試しください。");
+                    alert("結果の保存に失敗しました。");
                 }
             })
-            .catch(error => console.error("エラーが発生しました:", error));
+            .catch(error => {
+                console.error("エラー:", error);
+                alert("結果の保存中にエラーが発生しました。");
+            });
         }
-
+    } else {
+        alert("回答を選択してください。");
+    }
+}
+        // 最初の質問を表示
         showQuestion();
     </script>
 </body>

@@ -1,10 +1,6 @@
 <?php
 session_start();
-
-const SERVER = 'mysql310.phy.lolipop.lan';
-const DBNAME = 'LAA1517323-circus';
-const USER = 'LAA1517323';
-const PASS = 'Pass0128';
+require 'connect/connect.php';
 
 $errors = []; // エラーメッセージを格納する配列
 
@@ -53,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               $errors['login'] = 'メールアドレスもしくはパスワードが間違っています。';
             } else {
                 $_SESSION['id'] = $user['id'];
-                header('Location: home.php');
+                header('Location: top.php');
                 exit;
             }
         } catch (Exception $e) {

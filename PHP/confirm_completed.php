@@ -39,9 +39,47 @@ if ($insert_stmt->execute()) {
     $delete_stmt->bind_param("s", $token);
     $delete_stmt->execute();
 
-    header("refresh:5;url=login.php");
-    echo "登録が完了しました。";
+    header("refresh:5;url=login-input.php");
 } else {
     echo "登録処理中にエラーが発生しました。";
 }
 ?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登録内容確認</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>ユーザー登録が完了しました</h2>
+        <p>数秒後に自動でログイン画面へ遷移します<br>しばらくお待ちください...</p>
+    </div>
+</body>
+</html>
