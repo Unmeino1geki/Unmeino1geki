@@ -3,30 +3,32 @@
 require_once 'connect/dbconnect.php'; // DB接続情報などの設定を格納
 session_start();
 
-// セッションチェック
-if (!isset($_SESSION['user_id'])) {
-    redirectWithMessage("ログインが必要です。ログインページに遷移します。", "login-input.php");
-}
-
 // 共通関数：リダイレクトを行う
 function redirectWithMessage($message, $url, $delay = 3) {
-    // HTMLの出力を制御
     echo "<p>$message</p>";
     header("Refresh: $delay; url=$url");
     exit();
 }
 
+// セッションチェック（ログインしているか確認）
+if (!isset($_SESSION['user_id'])) {
+    redirectWithMessage("ログインが必要です。ログインページに遷移します。", "login-input.php");
+}
+
 // DB接続
 try {
+    // DB接続情報は共通の設定から読み込まれる
     $pdo = new PDO('mysql:host=' . SERVER . ';dbname=' . DBNAME . ';charset=utf8', USER, PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    die("データベース接続エラー: " . $e->getMessage());
+    error_log("データベース接続エラー: " . $e->getMessage(), 0); // エラーログに記録
+    die("<p>システムエラーが発生しました。しばらくしてから再度お試しください。</p>");
 }
 
-// 現在のユーザーID
+// 現在のユーザーID（セッションから取得）
 $userId = $_SESSION['user_id'];
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ja">
