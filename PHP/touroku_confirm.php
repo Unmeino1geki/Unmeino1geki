@@ -4,7 +4,7 @@ session_start();
 $email = isset($_SESSION['User']['email']) ? $_SESSION['User']['email'] : '未入力';
 $username = isset($_SESSION['User']['username']) ? $_SESSION['User']['username'] : '未入力';
 $gender = isset($_SESSION['User']['gender']) ? $_SESSION['User']['gender'] : '未入力';
-$skinType = isset($_SESSION['User']['skin_type']) ? $_SESSION['User']['skin_type'] : '未診断';
+$skinType = isset($_SESSION['skin_type']) ? $_SESSION['skin_type'] : '未診断';
 ?>
 
 <!DOCTYPE html>
@@ -16,84 +16,89 @@ $skinType = isset($_SESSION['User']['skin_type']) ? $_SESSION['User']['skin_type
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            background-color: #f4f4f4;
             margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        h1 {
-            color: #4a90e2;
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-
-        .confirm-container {
-            background: #fff;
+        .form-container {
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 500px;
-            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
         }
 
-        .info-row {
-            margin-bottom: 15px;
-            font-size: 1.2em;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
         }
 
         label {
-            font-weight: bold;
+            display: block;
             margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
         }
 
-        input[type="text"], select {
-            padding: 8px;
-            font-size: 1em;
+        input[type="email"],
+        input[type="text"],
+        select {
+            outline: none;
             width: 100%;
-            max-width: 300px;
-            margin-bottom: 10px;
-        }
-
-        .confirm-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1em;
-            background-color: #4a90e2;
-            color: white;
-            border: none;
-            border-radius: 5px;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+            background-color: #f9f9f9;
+            color: #333;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
 
-        .confirm-button:hover {
-            background-color: #357abd;
+        .gender {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .gender label {
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <h1>登録内容確認</h1>
-    <div class="confirm-container">
-    <p>以下の内容をご確認ください。「確認し、本人確認メールを送信する」ボタンを押すと、登録されたメールアドレスに本人確認用のリンクが送信されます。</p>
-    <form action="touroku_confirm_output.php" method="post">
-        <div class="info-row">
+    <div class="form-container">
+        <h2>登録内容確認</h2>
+        <p class="explanation-text">以下の内容をご確認ください。<br>登録内容に誤りがありましたら、修正をお願いします<br>「確認し、本人確認メールを送信する」ボタンを押すと、登録されたメールアドレスに本人確認用のリンクが送信されます。</p>
+        <form action="touroku_confirm_output.php" method="post">
             <label for="email">メールアドレス:</label>
-            <input type="text" name="email" id="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>" required>
-        </div>
-        <div class="info-row">
+            <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>" required>
+
             <label for="username">ユーザー名:</label>
-            <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>" required>
-        </div>
-        <div class="info-row">
+            <input type="text" name="username" id="username" value="<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>" required>
+
             <label for="gender">性別:</label>
             <select name="gender" id="gender" required>
                 <option value="男" <?php if ($gender === '男') echo 'selected'; ?>>男</option>
@@ -101,18 +106,17 @@ $skinType = isset($_SESSION['User']['skin_type']) ? $_SESSION['User']['skin_type
                 <option value="ジェンダー" <?php if ($gender === 'ジェンダー') echo 'selected'; ?>>ジェンダー</option>
                 <option value="なし" <?php if ($gender === 'なし') echo 'selected'; ?>>回答しない</option>
             </select>
-        </div>
-        <div class="info-row">
+
             <label for="skin_type">肌質診断結果:</label>
             <select name="skin_type" id="skin_type" required>
-                <option value="dry" <?php if ($skinType === 'dry') echo 'selected'; ?>>乾燥肌</option>
-                <option value="normal" <?php if ($skinType === 'normal') echo 'selected'; ?>>普通肌</option>
-                <option value="combination" <?php if ($skinType === 'combination') echo 'selected'; ?>>混合肌</option>
-                <option value="oily" <?php if ($skinType === 'oily') echo 'selected'; ?>>脂性肌</option>
+                <option value="dry" <?php if ($skinType === '乾燥肌') echo 'selected'; ?>>乾燥肌</option>
+                <option value="normal" <?php if ($skinType === '普通肌') echo 'selected'; ?>>普通肌</option>
+                <option value="combination" <?php if ($skinType === '混合肌') echo 'selected'; ?>>混合肌</option>
+                <option value="oily" <?php if ($skinType === '油性肌') echo 'selected'; ?>>脂性肌</option>
             </select>
-        </div>
-        <button type="submit" class="confirm-button">確認し、本人確認メールを送信する</button>
-    </form>
-</div>
+
+            <input type="submit" value="確認し、本人確認メールを送信する">
+        </form>
+    </div>
 </body>
 </html>

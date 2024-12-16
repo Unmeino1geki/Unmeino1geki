@@ -22,13 +22,13 @@ if (!isset($_SESSION['user_id'])) {
         <h2>メールアドレス変更</h2>
         <form action="./complete_email" method="post">
         <label for="now_email">現在のメールアドレス</label>
-        <input type="email" id="now_email" name="now_email" required palceholder="現在のメールアドレスを入力">
+        <input type="email" id="now_email" name="now_email" required palceholder="現在のメールアドレスを入力"><br>
 
         <label for="new_email">新しいメールアドレス</label>
-        <input type="email" id="new_email" name="new_email" required palceholder="新しいメールアドレスを入力">
+        <input type="email" id="new_email" name="new_email" required palceholder="新しいメールアドレスを入力"><br>
 
         <label for="confirm_new_email">新しいメールアドレス(確認用)</label>
-        <input type="email" id="confirm_new_email" name="confirm_new_email" required palceholder="新しいメールアドレスを再入力">
+        <input type="email" id="confirm_new_email" name="confirm_new_email" required palceholder="新しいメールアドレスを再入力"><br>
 
         <input type="submit" value="変更">
         </form>

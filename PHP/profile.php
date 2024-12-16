@@ -6,7 +6,7 @@ session_start();
 if (!isset($_SESSION['user_id'])) {
     // 未ログインの場合はログインページにリダイレクト
     echo "<p>ログインが必要です。ログインページに遷移します。</p>";
-    header("Location: login.php");
+    header("Location: login-input.php");
     exit();
 }
 ?>
