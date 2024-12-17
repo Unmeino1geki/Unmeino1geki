@@ -54,11 +54,13 @@ session_start();
     <div id="menu" class="menu bg-white shadow-lg max-h-0 justify-between">
         <div class="p-4 flex ">
 
+        <?php $user_id = isset($_SESSION['User']['id']) ? $_SESSION['User']['id'] : ''; ?>
+
 
             <!-- ボタン類 -->
 
                 <a href="favorites.php" class="w-1/3  mr-2 ml-2 py-3 px- bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-pink-200">いいね</button></a>
-                <a href="profile.php" class="w-1/3 mr-2 ml-2 py-3 px-4 bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-blue-200">プロフィール</a></button>
+                <a href="profile.php?id=<?php $user_id ?>" class="w-1/3 mr-2 ml-2 py-3 px-4 bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-blue-200">プロフィール</a></button>
                 <a href="logout.php" class="w-1/3 mr-2 ml-2 py-3 px-4 bg-gray-200 text-black text-center border-solid border-4 rounded hover:bg-red-300">ログアウト</a></button>
 
             

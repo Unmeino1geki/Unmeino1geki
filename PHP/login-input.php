@@ -1,6 +1,7 @@
 <?php
 session_start();
 require 'connect/connect.php';
+unset($_SESSION['User']); // セッションの初期化
 
 $errors = []; // エラーメッセージを格納する配列
 
