@@ -26,7 +26,7 @@ session_start();
         </div>
 
         <!-- 検索バー -->
-                    <form ation="search.php" method="GET" class="flex items-center w-2/3 mt-0 ml-2 mr-2">
+                    <form ation="API.php" method="GET" class="flex items-center w-2/3 mt-0 ml-2 mr-2">
                 <input 
                     type="search"
                     name="query"
