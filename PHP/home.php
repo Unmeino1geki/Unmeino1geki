@@ -57,6 +57,28 @@
 
 <div id="contents">
     <main>
+    <section class="box1" id="kodawari">
+
+<p class="deco-text">Main function</p>
+<img src="images/illust1.svg" alt="" class="illust1">
+<img src="images/illust2.svg" alt="" class="illust2">
+
+<div class="text order1 blur">
+
+<h2><span class="main-text">本サービスのメイン機能</span><span class="sub-text">Main function</span></h2>
+
+<p>本サービスは肌質を登録時に判断し、話題のChatGpt(AI)を使用して、ユーザーの肌質にあった化粧水等の美容品を自動的に表示するようになっています。</p>
+<p>また、ヤフーショッピング様の商品を紹介しているため、多くの種類の商品をご紹介することができます。
+</p>
+</div>
+<!--/.text-->
+
+<div class="image blur">
+<img src="images/ChatGpt.jpg" alt="" class="speed1">
+<img src="images/yahoo.jpg" alt="" class="speed2">
+</div>
+
+</section>
         <section class="bg1">
             <h2 class="c"><span class="fade-in-text">review</span><span class="hosoku">レビュー</span></h2>
             <div class="list-grid1">

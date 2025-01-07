@@ -884,4 +884,112 @@ animationの行の「0.05s」が文字の出現のなめらかさで、大きい
 		background: #fff; /* 背景色を変更 */
 		color: #333; /* ホバー時の文字色変更 */
 	}
+	/*box1（1つ目のセクションボックス）
+---------------------------------------------------------------------------*/
+/*ボックス全体*/
+.box1 {
+	overflow-x: visible;
+	position: relative;
+	background: #F5F4EC;	/*背景色*/
+	padding: var(--space-large);	/*ボックス内の余白。冒頭にあるspace-largeを読み込みます。*/
+	margin-top: 10vw;	/*上に空けるスペース。スライドショーとこのボックスの間のスペースです。お好みで。*/
+}
+
+/*ボックス上部の大きな装飾テキスト*/
+.box1 .deco-text {
+	position: absolute;
+	right: 0;
+	top: -13.5vw;		/*文字とボックスの配置バランスです。お好みで調整して下さい。*/
+	color: #F5F4EC;		/*文字色*/
+	font-size: 7vw;		/*下の.box1のmargin-topと合わせる*/
+	line-height: 1;
+}
+
+/*ボックスの左上イラスト（1つ目）*/
+.box1 .illust1 {
+	position: absolute;
+	right: 6vw;		/*右からの配置場所*/
+	top: 5vw;		/*上からの配置場所*/
+	width: 23vw;	/*イラストの幅。*/
+	opacity: 0.2;	/*透明度。色が20%出た状態。*/
+	transform: rotate(-20deg);	/*左に20度回転*/
+}
+
+/*ボックスの左上イラスト（2つ目）*/
+.box1 .illust2 {
+	position: absolute;
+	right: 0vw;		/*右からの配置場所*/
+	top: 2vw;		/*上からの配置場所*/
+	width: 13vw;	/*イラストの幅。*/
+	opacity: 0.2;	/*透明度。色が20%出た状態。*/
+	transform: rotate(20deg);	/*右に20度回転*/
+}
+
+/*テキストボックス*/
+.box1 .text {
+	margin-bottom: 5rem;	/*下に5文字分の余白*/
+}
+
+	/*画面幅600px以上の追加指定*/
+	@media screen and (min-width:600px) {
+
+	.box1 {
+		display: flex;	/*横並びにする*/
+		gap: 5vw;		/*左右の間のスペース*/
+		border-radius: 20vw 0 20vw 0;	/*角を丸くする指示。左上、右上、右下、左下への順番。*/
+	}
 	
+	.box1 > * {flex: 1;}
+
+	/*ボックスの左上イラスト（1つ目）*/
+	.box1 .illust1 {
+		rignt: auto;
+		left: 3vw;		/*左からの配置場所*/
+		top: -13vw;		/*上からの配置場所。マイナスがついているので本来の向きとは逆に移動します。*/
+		width: 12vw;	/*イラストの幅。*/
+	}
+
+	/*ボックスの左上イラスト（2つ目）*/
+	.box1 .illust2 {
+		rignt: auto;
+		left: 16vw;		/*左からの配置場所*/
+		top: -8vw;		/*上からの配置場所。マイナスがついているので本来の向きとは逆に移動します。*/
+		width: 8vw;	/*イラストの幅。*/
+	}
+
+	/*テキストボックスの上の小さなイラスト*/
+	.box1 h2 img {
+		width: 5vw;	/*幅*/
+	}
+
+	.box1 .text {
+		margin-bottom: 0;	/*下マージンのリセット*/
+	}
+
+	}/*追加指定ここまで*/
+
+
+/*画像を囲むブロック*/
+.box1 .image {
+	position: relative;
+}
+
+/*画像の角を少し丸くする指定*/
+.box1 .image img {
+	border-radius: 10px;
+}
+
+/*画像ブロック内の１枚目の写真への追加指定*/
+.box1 .image img:nth-of-type(1) {
+	width: 80%;	/*画像の幅*/
+}
+
+/*画像ブロック内の２枚目の写真への追加指定*/
+.box1 .image img:nth-of-type(2) {
+	width: 40%;	/*画像の幅*/
+}
+.box1 .image img:nth-of-type(2) {
+	position: absolute;
+	right: 0;	/*画像ブロックに対して右側からの配置場所*/
+	top: 15vw;	/*画像ブロックに対して上からの配置場所*/
+}
