@@ -109,6 +109,9 @@ main {
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-left-width: 0px;
+    margin-left: 20px;
+
 }
 
 .allergy-section h2 {
@@ -147,4 +150,15 @@ main {
 
 .allergy-section button:hover {
     background-color: #45a049;
+}
+
+.aaa button{
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.aaa button:hover {
+    background-color: #eaeaea;
 }

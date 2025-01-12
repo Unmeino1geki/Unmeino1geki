@@ -52,18 +52,20 @@ $userId = $_SESSION['user_id'];
 
     <!-- サイドメニュー -->
     <aside>
+        <div class="aaa">
         <ul>
-            <li><a href="../PHP/top.php">トップ</a></li>
-            <li><a href="../PHP/change_email.php">メールアドレス変更</a></li>
-            <li><a href="../PHP/change_password">パスワード変更</a></li>
-            <li><a href="../PHP/sakujyo.php">アカウント削除</a></li>
-            <li><a href="#">アレルギー追加/変更</a></li>
+            <li><button><a href="../PHP/top.php">トップ</a></button></li>
+            <li><button><a href="../PHP/change_email.php">メールアドレス変更</a></button></li>
+            <li><button><a href="../PHP/change_password">パスワード変更</a></button></li>
+            <li><button><a href="../PHP/sakujyo.php">アカウント削除</a></button></li>
         </ul>
+        </div>
     </aside>
 
     <!-- メインコンテンツ -->
     <main>
         <!-- ユーザー情報セクション -->
+        <div class="allergy-section">
         <section class="user-info">
             <h2>プロフィール情報</h2>
             <div class="profile-details">
@@ -75,13 +77,13 @@ $userId = $_SESSION['user_id'];
 
                     // 名前と性別を取得
                     $stmt = $pdo->prepare('SELECT name, gender FROM user WHERE id = :id');
-                    $stmt->execute([':id' => 14]); // 14はユーザーIDの例
+                    $stmt->execute([':id' => $userId]);
                     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     if ($user) {
                         echo "<p>名前: " . htmlspecialchars($user['name']) . "</p>";
                         echo "<p>性別: " . htmlspecialchars($user['gender']) . "</p>";
-                        echo '<button type="button" onclick="showEditForm()">編集</button>';
+                        echo '<button type="button" onclick="showUserEditForm()">編集</button>';
                     } else {
                         echo "<p>ユーザー情報はありません。</p>";
                     }
@@ -91,7 +93,7 @@ $userId = $_SESSION['user_id'];
                 }
                 ?>
             </div>
-
+            
             <!-- 名前・性別編集フォーム -->
             <form id="user-edit-form" action="profile_update.php" method="POST" style="display:none;">
                 <label for="name">名前:</label>
@@ -107,33 +109,7 @@ $userId = $_SESSION['user_id'];
                 <button type="submit" class="save">保存</button>
             </form>
         </section>
-
-        <!-- お気に入り商品セクション -->
-        <section class="favorites">
-            <h2>あなたのお気に入り商品</h2>
-            <div class="favorite-items">
-                <?php
-                // お気に入り商品を取得・表示
-                try {
-                    $stmt = $pdo->prepare('SELECT image_path FROM favorites WHERE user_id = :user_id');
-                    $stmt->execute([':user_id' => 14]);
-                    $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                    if ($favorites) {
-                        foreach ($favorites as $favorite) {
-                            echo '<div class="item"><img src="' . htmlspecialchars($favorite['image_path']) . '" alt="お気に入り商品"></div>';
-                        }
-                    } else {
-                        echo '<p>お気に入りの商品はありません。</p>';
-                    }
-
-                } catch (PDOException $e) {
-                    echo "データベース接続エラー: " . $e->getMessage();
-                }
-                ?>
-            </div>
-        </section>
-
+</div>
         <!-- アレルギー追加・変更セクション -->
         <section class="allergy-section">
             <h2>アレルギーの追加・変更</h2>
@@ -142,12 +118,12 @@ $userId = $_SESSION['user_id'];
                 // アレルギー情報を取得・表示
                 try {
                     $stmt = $pdo->prepare('SELECT allergies FROM user WHERE id = :id');
-                    $stmt->execute([':id' => 14]);
+                    $stmt->execute([':id' => $userId]); // ユーザーIDを使用
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     if ($row) {
                         echo "<p>現在のアレルギー: " . htmlspecialchars($row['allergies']) . "</p>";
-                        echo '<button type="button" onclick="showEditForm()">変更</button>';
+                        echo '<button type="button" onclick="showAllergyEditForm()">変更</button>';
                     } else {
                         echo "<p>アレルギー情報はありません。</p>";
                     }
@@ -168,8 +144,13 @@ $userId = $_SESSION['user_id'];
     </main>
 
     <script>
-        function showEditForm() {
+        // ユーザー情報編集フォームを表示
+        function showUserEditForm() {
             document.getElementById('user-edit-form').style.display = 'block';
+        }
+
+        // アレルギー編集フォームを表示
+        function showAllergyEditForm() {
             document.getElementById('allergy-edit-form').style.display = 'block';
         }
     </script>
