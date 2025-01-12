@@ -146,7 +146,7 @@ if (isset($_SESSION['message'])) {
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     if ($row) {
-                        echo "<p>現在のアレルギー: " . htmlspecialchars($row['allergies']) . "</p>";
+                        echo "<p>現在のアレルギー: " . htmlspecialchars($row['allergies'] ?? '未記入') . "</p>";
                         echo '<button type="button" onclick="showAllergyEditForm()">変更</button>';
                     } else {
                         echo "<p>アレルギー情報はありません。</p>";
